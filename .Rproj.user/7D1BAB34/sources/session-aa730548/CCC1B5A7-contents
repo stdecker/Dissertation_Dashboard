@@ -1034,6 +1034,17 @@ subplot(h2o2_per_VMAX, h2o2_per_KM, H2o2_per_IMAX, h2o2_per_PERCENT, shareY = FA
   )), margin = 0.07)
 ```
 
+## Row
+
+### **Conclusions**
+
+Study is still in progress. I will update this as soon as I can.
+
+## Row
+
+### **Summary Diagram**
+
+Study is still in progress. I will update this as soon as I can.
 
 
 # `r fontawesome::fa("fire")` Substrate Utilization {#Aim3}
@@ -1360,7 +1371,7 @@ permeabilization
 
 ```{r}
 shinyUI(
-  tags$iframe(style="height:650px; width:100%; scrolling=yes", 
+  tags$iframe(style="height:700px; width:100%; scrolling=yes", 
                   src="data/Dissertation.pdf")
       )
 
@@ -1375,22 +1386,22 @@ shinyUI(
       tabsetPanel(
         # using iframe along with tags() within tab to display pdf with scroll, height and width could be adjusted
         tabPanel("Acute CSC Titrations", value = "Coming Soon"#,
-                 # tags$iframe(style="height:650px; width:100%; scrolling=yes",
+                 # tags$iframe(style="height:700px; width:100%; scrolling=yes",
                  #  src="https://cran.r-project.org/doc/manuals/r-release/R-intro.pdf"
                  #)
         ),
         tabPanel("Mechanisms", value = "Coming Soon"#,
-                 # tags$iframe(style="height:650px; width:100%; scrolling=yes",
+                 # tags$iframe(style="height:700px; width:100%; scrolling=yes",
                  #  src="https://cran.r-project.org/doc/manuals/r-release/R-intro.pdf"
                  #)
         ),
         tabPanel("ROS Production", value = "Coming Soon"#,
-                 # tags$iframe(style="height:650px; width:100%; scrolling=yes",
+                 # tags$iframe(style="height:700px; width:100%; scrolling=yes",
                  #  src="https://cran.r-project.org/doc/manuals/r-release/R-intro.pdf"
                  #)
         ),
         tabPanel("Substrate Utilization", value = "Coming Soon"#,
-                 # tags$iframe(style="height:650px; width:100%; scrolling=yes",
+                 # tags$iframe(style="height:700px; width:100%; scrolling=yes",
                  #  src="https://cran.r-project.org/doc/manuals/r-release/R-intro.pdf"
                  #)
         )

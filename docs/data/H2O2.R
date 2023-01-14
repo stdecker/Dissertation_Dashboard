@@ -1578,7 +1578,6 @@ h2o2_per_inhibition <- ggplot(data = individ_h2o2_per_kinetics[-c(29),], aes(x =
   stat_summary(geom = "bar", position = position_dodge(0.99), fill = "white", size = 1) +
   theme_prism() +
   scale_color_manual(breaks = c("Gastrocnemius Control", "Gastrocnemius Smoke","Soleus Control", "Soleus Smoke"), values = c("red", "darkred", "blue", "darkblue")) +
-  geom_vline(xintercept = 1.5, linetype = "longdash", color = "grey50", size = .6) + 
   coord_cartesian(ylim = c(-1.1, 0), clip = "off") +
   scale_y_continuous(expand = c(0,0), breaks = seq(-1.1, 0, 0.1), labels = scales::percent_format()) +
   labs(y=expression(bold(Inhibition~('%'~V[max])))) +
