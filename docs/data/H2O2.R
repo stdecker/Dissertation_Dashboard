@@ -1540,7 +1540,6 @@ h2o2_per_km <- ggplot(data = individ_h2o2_per_kinetics[-c(29),], aes(x = Tissue,
   theme(axis.title.x = element_blank(),
         axis.ticks.x = element_blank(),
         axis.text.x = element_blank()) + 
-  new_scale_fill() +
   # geom_point(data = individ_adp_kinetics, aes(x = Condition, y = Km, fill = Condition), position = position_dodge(0.99), size = 2, pch = 21, stroke = 1.5, show.legend = FALSE) +
   geom_beeswarm(data = individ_h2o2_per_kinetics[-c(29),], aes(x = Tissue, y = IC50, color = Condition), dodge.width = 0.99, size = 2, pch = 21, stroke = 1.5, show.legend = FALSE, cex = 2) +
   #stats
