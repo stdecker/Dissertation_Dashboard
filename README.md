@@ -6,7 +6,7 @@ For an in-depth look at my data and links to the manuscripts, feel free to visit
 
 Please contact me for any changes or discrepancies.
 
-**Note: Aims 2 and 3 are switched from my dashboard and my dissertation document. This is purely for asthetic purposes.*
+**Note: Aims 2 and 3 are switched from my dashboard and my dissertation document & R files. This is purely for asthetic purposes. Aim 2 in the document and R files refers to the substrate sensitiity work, while Aim 3 in these files refers to the mechanistic work with carboxyatractyloside. In the dashboard, these aims are switched.*
 
 # License
 This project is licensed under the [Creative Commons Attribution 4.0 International (CC BY 4.0)](https://creativecommons.org/licenses/by/4.0/)
