@@ -3,7 +3,7 @@
     "path": "C:/Users/Stephen/OneDrive - University of Massachusetts/Desktop/Dissertation_Dashboard/index.Rmd",
     "project_path": "index.Rmd",
     "type": "r_markdown",
-    "hash": "2077620326",
+    "hash": "0",
     "contents": "",
     "dirty": false,
     "created": 1673705483655.0,
@@ -13,15 +13,15 @@
         "tempName": "Untitled1",
         "source_window_id": "",
         "Source": "Source",
-        "cursorPosition": "1046,64",
-        "scrollLine": "1036"
+        "cursorPosition": "145,39",
+        "scrollLine": "127"
     },
     "folds": "",
-    "lastKnownWriteTime": 1673708273,
+    "lastKnownWriteTime": 1673793170,
     "encoding": "UTF-8",
     "collab_server": "",
     "source_window": "",
-    "last_content_update": 1673708273059,
+    "last_content_update": 1673793170859,
     "read_only": false,
     "read_only_alternatives": []
 }

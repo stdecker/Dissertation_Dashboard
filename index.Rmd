@@ -138,7 +138,15 @@ img_mainresults
 
 ### **Disclaimers**
 
-All illustrations were created using [BioRender.com](biorender.com)
+All illustrations were created using [BioRender.com](biorender.com). 
+<br>
+This project is licensed under the [Creative Commons Attribution 4.0 International (CC BY 4.0)](https://creativecommons.org/licenses/by/4.0/)
+
+####
+```{rfig.align='center', out.width=225}
+img_BR <- image_read("data/Images/BRLogo.png")
+```
+
 
 
 # `r fontawesome::fa("list")` Abstracts
@@ -771,7 +779,7 @@ subplot(CAT_vmax, CAT_km, CAT_imax, CAT_percent, shareY = FALSE, titleY = TRUE) 
     xanchor = "center",  
     yanchor = "bottom",  
     showarrow = FALSE 
-  )), margin = 0.07)
+  )), margin = 0.1)
 
 ```
 
@@ -927,7 +935,7 @@ subplot(h2o2_VMAX, h2o2_KM, H2o2_IMAX, h2o2_PERCENT, shareY = FALSE, titleY = TR
     xanchor = "center",  
     yanchor = "bottom",  
     showarrow = FALSE 
-  )), margin = 0.07)
+  )), margin = 0.1)
 ```
 
 
@@ -969,7 +977,7 @@ subplot(h2o2_KM, h2o2_PERCENT, shareY = FALSE, titleY = TRUE) %>% layout(annotat
     xanchor = "center",  
     yanchor = "bottom",  
     showarrow = FALSE 
-  )), margin = 0.07)
+  )), margin = 0.1)
 ```
 
 
@@ -1031,7 +1039,7 @@ subplot(h2o2_per_VMAX, h2o2_per_KM, H2o2_per_IMAX, h2o2_per_PERCENT, shareY = FA
     xanchor = "center",  
     yanchor = "bottom",  
     showarrow = FALSE 
-  )), margin = 0.07)
+  )), margin = 0.1)
 ```
 
 ## Row
@@ -1105,6 +1113,10 @@ The second protocol was used to assess palmitoylcarnitine (PC)-stimulated respir
 &emsp; Pyruvate and PC kinetics were fitted to a modified Michaelis-Menten equation, as follows:\
 
 $$JO_2 = C + \frac{V_{max} - C}{1 + \frac{K_m}{[S]}}$$\
+
+<br>
+<br>
+<br>
 
 ## Row {.tabset data-height=650}
 
@@ -1340,7 +1352,7 @@ Mature C57BL/6 mice were used for these studies. All animals were maintained on 
 
 #### Tissues Used
 
-```{r}
+```{r, fig.align='center', out.width=450}
 tissues <- image_read("data/Images/Tissues.png")
 
 tissues
@@ -1357,7 +1369,7 @@ After the muscle sample was gently dabbed with a paper towel to remove excess fl
 
 #### Permeabilization Diagram
 
-```{r}
+```{r, fig.align='center', out.width=450}
 permeabilization <- image_read("data/Images/PermProtocols.png")
 
 permeabilization

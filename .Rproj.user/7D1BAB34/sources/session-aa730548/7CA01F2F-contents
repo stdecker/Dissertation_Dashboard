@@ -107,7 +107,7 @@ pyruvatePC_vmax <- ggplot(subset(aim_2_combined_3Param, Substrate %in% "Pyruvate
   geom_beeswarm(cex = 3, data = subset(aim_2_combined_3Param, Substrate %in% "Pyruvate in PC"), aes(x = Tissue, y = Vmax, color = Condition), dodge.width = 0.99, size = 2, pch = 21, stroke = 1.5, show.legend = FALSE) +
   annotate('text', x = 0.45, y = 88, label = 'Smoke Main Effect: p = 0.035', hjust = 0, fontface = 2) +
   annotate('text', x = 0.45, y = 84, label = 'Tissue Main Effect: p < 0.001', hjust = 0, fontface = 2) +
-  annotate('text', x = 0.45, y = 80, label = 'Interaction Effect: p = 0.276', hjust = 0, fontface = 2)# +
+  annotate('text', x = 0.45, y = 80, label = 'Interaction Effect: p = 0.276', hjust = 0, fontface = 2) +
    # geom_vline(xintercept = 1.5, size = 1, alpha = 0.5, linetype = "longdash") #+   #+  
   # annotate('text', x = 1.78, y = 90, label = '*', fontface = 2, hjust = 0.5, size = 6) + 
   # annotate('text', x = 2.23, y = 87, label = '#', fontface = 2, hjust = 0.5, size = 4) +
@@ -269,8 +269,6 @@ Sidak(c(percent_km_results$P[1], percent_km_results$P[6]))
 wide_per_km <- pivot_wider(percent_combined[-c(18,34),], names_from = Condition, id_cols = Subject, values_from = c(Km))
 effectsize::cohens_d(wide_per_km$`Soleus Control`, wide_per_km$`Soleus Smoke`)
 
-percent_combined$Condition <- paste(percent_combined$Tissue, percent_combined$Smoke)
-
 pyr_percent_km <- ggplot(percent_combined[-c(18,34),], aes(x = Tissue, y = Km, color = Condition)) +
   #stat_summary(fun.data = "mean_se", geom = "errorbar", position = position_dodge(width=0.9), width = 0.3, size = 1, na.rm = TRUE) +
   stat_summary(geom = "bar", position = position_dodge(0.95), size = 1, fill = "white") +
@@ -347,7 +345,7 @@ pyr_percent_km2 <- ggplot(percent_combined[-c(18,34),], aes(x = Tissue, y = Km2,
   geom_hline(yintercept = 0, size = 1) +  
   #annotate('text', x = 1.23, y = .9, label = '*', fontface = 2, hjust = 0.5, size = 6) +
   geom_bracket(xmin = c(.755), xmax = c(1.245), y.position = 1.72, inherit.aes = F, label = "p = 0.001", size = 1, fontface = 2, tip.length = .02) +
-  geom_bracket(xmin = c(1.75), xmax = c(2.245), y.position = .8, inherit.aes = F, label = "p = 0.053", size = 1, fontface = 2, tip.length = .02)# +
+  geom_bracket(xmin = c(1.75), xmax = c(2.245), y.position = .8, inherit.aes = F, label = "p = 0.053", size = 1, fontface = 2, tip.length = .02) +
    # geom_vline(xintercept = 1.5, size = 1, alpha = 0.5, linetype = "longdash") #+  
 
 
@@ -373,7 +371,7 @@ pyr_percent_vmax2 <- ggplot(percent_combined, aes(x = Tissue, y = Vmax2, color =
   # annotate('text', x = 2.23, y = 1.2, label = '*', fontface = 2, hjust = 0.5, size = 6) +
   geom_hline(yintercept = 0, size = 1) +  
   #annotate('text', x = 1.23, y = 2, label = '*', fontface = 2, hjust = 0.5, size = 6) +
-  geom_bracket(xmin = c(.755), xmax = c(1.245), y.position = .97, inherit.aes = F, label = "p = 0.003", size = 1, fontface = 2, tip.length = 0.015)# +
+  geom_bracket(xmin = c(.755), xmax = c(1.245), y.position = .97, inherit.aes = F, label = "p = 0.003", size = 1, fontface = 2, tip.length = 0.015) +
    # geom_vline(xintercept = 1.5, size = 1, alpha = 0.5, linetype = "longdash") #+  
 
 
