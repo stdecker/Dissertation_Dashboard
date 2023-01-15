@@ -136,17 +136,28 @@ img_mainresults
 
 ## Row
 
-### **Disclaimers**
-
-All illustrations were created using [BioRender.com](biorender.com). 
+### **License & Disclaimers**
+This project is licensed under the [Creative Commons Attribution 4.0 International (CC BY 4.0)](https://creativecommons.org/licenses/by/4.0/).
 <br>
-This project is licensed under the [Creative Commons Attribution 4.0 International (CC BY 4.0)](https://creativecommons.org/licenses/by/4.0/)
+<br>
+
+For more information on the UMass O2M lab, please visit [the website](https://sites.google.com/umass.edu/o2m-laboratory/home?pli=1) or [follow us on Twitter](https://twitter.com/UmassO2MLab).
+<br>
+<br>
+
+All authors have no conflicts of interest to declare. This work was funded in part by grants from the NIH National Heart, Lung, and Blood Institute (R00HL125756). All work for these projects were performed at the [University of Massachusetts Institute for Applied Life Sciences (IALS)](https://www.umass.edu/ials/). I would like to acknowledge the [IALS Center for Human Health & Performance](https://www.umass.edu/ials/ch2p) for their use of equipment for these projects; my dissertation committee members: Gwenael Layec (primary mentor), Jane Kent, Ned Debold, and David Marcinek for their time and insight; and Matt Campbell for help with the H<sub>2</sub>O<sub>2</sub> experiments. 
+<br>
+<br>
+
+All illustrations were created using [BioRender.com](biorender.com), of which I am currently a Campus Ambassador. My role as a Campus Ambassador is to promote BioRender in public and at universities, and in exchange I am given a free BioRender account, swag, and early access to new features. I do not recieve monetary compensation for this service.
+<br>
+<br>
 
 ####
-```{rfig.align='center', out.width=225}
+```{r fig.align='center', out.width=225}
 img_BR <- image_read("data/Images/BRLogo.png")
+img_BR
 ```
-
 
 
 # `r fontawesome::fa("list")` Abstracts
