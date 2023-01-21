@@ -815,7 +815,7 @@ aim2_outline
 # `r fontawesome::fa("explosion")` ROS Production {#Sup2}
 
 ```{r include=FALSE, echo=FALSE}
-source("data/H2O2.R")
+source("data/New_H2O2.R")
 ```
 
 
@@ -946,7 +946,7 @@ subplot(h2o2_VMAX, h2o2_KM, H2o2_IMAX, h2o2_PERCENT, shareY = FALSE, titleY = TR
     xanchor = "center",  
     yanchor = "bottom",  
     showarrow = FALSE 
-  )), margin = 0.1)
+  )), margin = 0.2)
 ```
 
 
@@ -988,7 +988,7 @@ subplot(h2o2_KM, h2o2_PERCENT, shareY = FALSE, titleY = TRUE) %>% layout(annotat
     xanchor = "center",  
     yanchor = "bottom",  
     showarrow = FALSE 
-  )), margin = 0.1)
+  )), margin = 0.15)
 ```
 
 
@@ -1050,7 +1050,7 @@ subplot(h2o2_per_VMAX, h2o2_per_KM, H2o2_per_IMAX, h2o2_per_PERCENT, shareY = FA
     xanchor = "center",  
     yanchor = "bottom",  
     showarrow = FALSE 
-  )), margin = 0.1)
+  )), margin = 0.2)
 ```
 
 ## Row
@@ -1389,6 +1389,8 @@ permeabilization
 
 # `r fontawesome::fa("file-pdf")` Manuscripts {#Papers}
 
+## Row
+
 ### **Full Dissertation**
 
 
@@ -1423,13 +1425,24 @@ shinyUI(
                  #  src="https://cran.r-project.org/doc/manuals/r-release/R-intro.pdf"
                  #)
         ),
-        tabPanel("Substrate Utilization", value = "Coming Soon"#,
-                 # tags$iframe(style="height:700px; width:100%; scrolling=yes",
-                 #  src="https://cran.r-project.org/doc/manuals/r-release/R-intro.pdf"
-                 #)
+        tabPanel("Substrate Utilization",
+                 tags$iframe(style="height:700px; width:100%; scrolling=yes",
+                  src="data/Decker_S_Cigarette_Smoke_Mito_Substrate_Oxidation.pdf"
+                 )
         )
       )
 )
 
 ```
 
+## Row
+
+### **Manuscript Links**
+
+#### Substrate Utilixation Manuscript (Jan 2023 in Life Sciences): 
+
+**Decker ST**, Matias AA, Bannon ST, Madden JP, Alexandrou-Majaj N, Layec G. Effects of cigarette smoke on in situ mitochondrial substrate oxidation of slow- and fast-twitch skeletal muscles. *Life Sci.* 2023 Jan 13;315:121376. doi: 10.1016/j.lfs.2023.121376. PMID: 36646379.
+<br>
+[Life Sciences](https://www.sciencedirect.com/science/article/abs/pii/S0024320523000103?via%3Dihub)
+<br>
+[PubMed](https://pubmed.ncbi.nlm.nih.gov/36646379/)
