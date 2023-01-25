@@ -11,6 +11,7 @@ library(ggbeeswarm)
 library(ARTool)
 library(emmeans)
 library(stringr)
+library(plotrix)
 
 #Load data ----
 CS_data <- read_excel("C:\\Users\\Stephen\\OneDrive - University of Massachusetts\\O2MDrive_Beta\\Projects\\CS-THNR\\O2K Analysis Files\\Freezer Studies\\20 min incubations.xlsx", sheet = "CS Activity")
@@ -58,19 +59,18 @@ rstatix::cohens_d(data = subset(CS_data_long, Tissue %in% "Soleus"), formula = C
 rstatix::cohens_d(data = subset(CS_data_long, Tissue %in% "Aorta"), formula = CS ~ Smoke, paired = T)
 rstatix::cohens_d(data = subset(CS_data_long, Tissue %in% "Heart"), formula = CS ~ Smoke, paired = T)
 
+CS_data_long$Condition <- paste(CS_data_long$Tissue, CS_data_long$Smoke)
+
 # Plot CS Activities
-CS_activity <- ggplot(data = CS_data_long, aes(x = Tissue, y = CS, fill = Smoke)) +
-  stat_summary(geom = "bar", position = position_dodge(0.99), size = 1, color = "black") +
+CS_activity <- ggplot(data = CS_data_long, aes(x = Tissue, y = CS, color = Condition)) +
+  stat_summary(geom = "bar", position = position_dodge(0.99), size = 1, fill = "white") +
   theme_prism() +
-  scale_fill_manual(values = c("white", "grey33")) +
+  geom_vline(xintercept = c(1.5, 2.5, 3.5), size = 1, linetype = "longdash", color = "grey", alpha = 0.5) +
+  scale_color_manual(values = c("purple", "purple4", "blue", "blue4", "green", "green4",  "red", "red4")) +
   coord_cartesian(ylim = c(0, 90), clip = "off") +
   scale_y_continuous(expand = c(0,0), breaks = seq(0, 90, 10)) +
   labs(y=expression(bold('Citrate Synthase Activity (AU)'))) +
-  # ggtitle("Citrate Synthase Activity") +
-  new_scale_fill() +
-  # geom_point(data = individ_cat_kinetics, aes(x = Condition, y = CIIPercent, fill =  Condition), position = position_dodge(0.99), size = 2, pch = 21, stroke = 1.5, show.legend = FALSE) +
-  geom_beeswarm(data = CS_data_long, aes(x = Tissue, y = CS, fill = Smoke, pch = Tissue), dodge.width = 0.99, size = 2, stroke = 1.5, show.legend = FALSE, cex = 1.75) +
-  scale_fill_manual(values = c("white", "white")) +
+  geom_beeswarm(data = CS_data_long, aes(x = Tissue, y = CS, color = Condition, pch = Tissue), dodge.width = 0.99, size = 2, stroke = 1.5, show.legend = FALSE, cex = 1.75) +
   scale_shape_manual(values = c(24, 22, 21, 23)) +
   theme(axis.title.x = element_blank(),
         legend.position = "none") +

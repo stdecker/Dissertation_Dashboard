@@ -12,6 +12,8 @@ output:
     self_contained: FALSE
     theme: simplex
     css: ./data/includes/css_setup.css
+    runtime: shiny
+    output: html_document
 ---
 
 
@@ -41,11 +43,9 @@ library(officedown)
 library(knitr)
 library(shiny)
 library(plotly)
-library(shinyjs)        # add package, note runtime option above in YAML
-useShinyjs(rmd = TRUE)  # function needs to initialise js
-
+library(shinyjs)        
+useShinyjs(rmd = TRUE)
 library(plotrix)
-
 library(colorspace)
 library(jpeg)
 library("png")
@@ -273,32 +273,32 @@ ggplotly(abs_line)%>%
 
 ```{r}
 
-`Absolute Gastrocnemius` <- #Gastrocnemius_line
+`Gastrocnemius` <- #Gastrocnemius_line
 ggplotly(Gastrocnemius_line) %>%
    layout(yaxis = list(title = "<b><i>J</i><sub>O<sub>2</sub></sub> (pmol<sub>O<sub>2</sub></sub>/sec/mg<sub>wt</sub>)</b>", linewidth = 2, tickwidth = 2, tickfont = list(family = "Times New Roman Black")), xaxis = list(linewidth = 2, tickwidth = 2, tickfont = list(family = "Times New Roman Black", size = 14)), margin = 0) %>%
   add_lines(x = c(7.2, 7.2, 7.5, 7.5), y = c(55,55,55,55), showlegend = F, line = list(color = 'black'), legendgroup = 1, hoverinfo = 'none')%>%
   add_text(x = 7.35, y = 55.5, text = "<b>*</b>", textfont = list(size = 20), hoverinfo = 'none')
 
-`Absolute Soleus` <- #Soleus_line
+`Soleus` <- #Soleus_line
 ggplotly(Soleus_line) %>%
    layout(yaxis = list(title = "<b><i>J</i><sub>O<sub>2</sub></sub> (pmol<sub>O<sub>2</sub></sub>/sec/mg<sub>wt</sub>)</b>", linewidth = 2, tickwidth = 2, tickfont = list(family = "Times New Roman Black")), xaxis = list(linewidth = 2, tickwidth = 2, tickfont = list(family = "Times New Roman Black", size = 14)), margin = 0) %>%
   add_lines(x = c(6.75, 6.75, 7.5, 7.5), y = c(110,110,110,110), showlegend = F, line = list(color = 'black'), legendgroup = 1, hoverinfo = 'none') %>%
   add_text(x = 7.125, y = 111, text = "<b>*</b>", textfont = list(size = 20), hoverinfo = 'none')
 
-`Absolute Heart` <- #Heart_line
+`Heart` <- #Heart_line
 ggplotly(Heart_line) %>%
    layout(yaxis = list(title = "<b><i>J</i><sub>O<sub>2</sub></sub> (pmol<sub>O<sub>2</sub></sub>/sec/mg<sub>wt</sub>)</b>", linewidth = 2, tickwidth = 2, tickfont = list(family = "Times New Roman Black")), xaxis = list(linewidth = 2, tickwidth = 2, tickfont = list(family = "Times New Roman Black", size = 14)), margin = 0) %>%
   add_lines(x = c(7.25, 7.25, 7.5, 7.5), y = c(325,325,325,325), showlegend = F, line = list(color = 'black'), legendgroup = 1, hoverinfo = 'none')%>%
   add_text(x = 7.375, y = 327, text = "<b>*</b>", textfont = list(size = 20), hoverinfo = 'none')
 
-`Absolute Aorta` <- #Aorta_line
+`Aorta` <- #Aorta_line
 ggplotly(Aorta_line) %>%
    layout(yaxis = list(title = "<b><i>J</i><sub>O<sub>2</sub></sub> (pmol<sub>O<sub>2</sub></sub>/sec/mg<sub>wt</sub>)</b>", linewidth = 2, tickwidth = 2, tickfont = list(family = "Times New Roman Black")), xaxis = list(linewidth = 2, tickwidth = 2, tickfont = list(family = "Times New Roman Black", size = 14)), margin = 0) %>%
   add_lines(x = c(7.35, 7.35, 7.5, 7.5), y = c(27.5,27.5,27.5,27.5), showlegend = F, line = list(color = 'black'), legendgroup = 1, hoverinfo = 'none')%>%
   add_text(x = 7.425, y = 28, text = "<b>*</b>", textfont = list(size = 20), hoverinfo = 'none')
 
 ui3 <-shinyUI(fixedPage(
-  selectInput("selectPlot", "Tissue", choices=c("Absolute Gastrocnemius", "Absolute Soleus", "Absolute Heart", "Absolute Aorta")),
+  selectInput("selectPlot", "Tissue", choices=c("Gastrocnemius", "Soleus", "Heart", "Aorta")),
                       plotlyOutput("plot")))
 
 server3 <- shinyServer(function(input,output){
@@ -356,7 +356,7 @@ subplot(abs_break, abs_slope, shareY = FALSE, titleY = TRUE) %>% layout(annotati
 
 
 
-### CS Activitiy is Different Between Tissues
+### Citrate Synthase Activitiy is Different Between Tissues
 
 ```{r}
 ggplotly(con_CS_activity)%>%
@@ -364,7 +364,7 @@ ggplotly(con_CS_activity)%>%
 ```
 
 
-### Respiration Normalized to CS Activities
+### Respiration Normalized to Citrate Synthase Activities
 
 ```{r}
 ggplotly(CS_line) %>%
@@ -372,33 +372,33 @@ ggplotly(CS_line) %>%
 ```
 
 
-### CSC Impairs Respiration Normalized to CS Activity
+### CSC Impairs Respiration Normalized to Citrate Synthase Activity
 
 ```{r}
 
-`Gastrocnemius per CS` <- ggplotly(Gastrocnemius_CSline) %>%
+`Gastrocnemius per Citrate Synthase Activity` <- ggplotly(Gastrocnemius_CSline) %>%
    layout(yaxis = list(title = "<b><i>J</i><sub>O<sub>2</sub></sub> (pmol<sub>O<sub>2</sub></sub>/sec/CS)</b>", linewidth = 2, tickwidth = 2, tickfont = list(family = "Times New Roman Black")), xaxis = list(linewidth = 2, tickwidth = 2, tickfont = list(family = "Times New Roman Black", size = 14)), margin = 0) %>%
   add_lines(x = c(7.2, 7.2, 7.5, 7.5), y = c(10,10,10,10), showlegend = F, line = list(color = 'black'), legendgroup = 1, hoverinfo = 'none') %>%
   add_text(x = 7.35, y = 10.05, text = "<b>*</b>", textfont = list(size = 20), hoverinfo = 'none')
 
 
-`Soleus per CS` <- ggplotly(Soleus_CSline) %>%
+`Soleus per Citrate Synthase Activity` <- ggplotly(Soleus_CSline) %>%
 layout(yaxis = list(title = "<b><i>J</i><sub>O<sub>2</sub></sub> (pmol<sub>O<sub>2</sub></sub>/sec/CS)</b>", linewidth = 2, tickwidth = 2, tickfont = list(family = "Times New Roman Black")), xaxis = list(linewidth = 2, tickwidth = 2, tickfont = list(family = "Times New Roman Black", size = 14)), margin = 0) %>%
   add_lines(x = c(6.75, 6.75, 7.5, 7.5), y = c(7.5,7.5,7.5,7.5), showlegend = F, line = list(color = 'black'), legendgroup = 1, hoverinfo = 'none') %>%
   add_text(x = 7.125, y = 7.55, text = "<b>*</b>", textfont = list(size = 20), hoverinfo = 'none')
 
-`Heart per CS` <- ggplotly(Heart_CSline) %>%
+`Heart per Citrate Synthase Activity` <- ggplotly(Heart_CSline) %>%
 layout(yaxis = list(title = "<b><i>J</i><sub>O<sub>2</sub></sub> (pmol<sub>O<sub>2</sub></sub>/sec/CS)</b>", linewidth = 2, tickwidth = 2, tickfont = list(family = "Times New Roman Black")), xaxis = list(linewidth = 2, tickwidth = 2, tickfont = list(family = "Times New Roman Black", size = 14)), margin = 0) %>%
   add_lines(x = c(7.25, 7.25, 7.5, 7.5), y = c(6.25,6.25,6.25,6.25), showlegend = F, line = list(color = 'black'), legendgroup = 1, hoverinfo = 'none')%>%
   add_text(x = 7.375, y = 6.3, text = "<b>*</b>", textfont = list(size = 20), hoverinfo = 'none')
 
-`Aorta per CS` <- ggplotly(Aorta_CSline) %>%
+`Aorta per Citrate Synthase Activity` <- ggplotly(Aorta_CSline) %>%
 layout(yaxis = list(title = "<b><i>J</i><sub>O<sub>2</sub></sub> (pmol<sub>O<sub>2</sub></sub>/sec/CS)</b>", linewidth = 2, tickwidth = 2, tickfont = list(family = "Times New Roman Black")), xaxis = list(linewidth = 2, tickwidth = 2, tickfont = list(family = "Times New Roman Black", size = 14)), margin = 0) %>%
   add_lines(x = c(7.35, 7.35, 7.5, 7.5), y = c(1.6,1.6,1.6,1.6), showlegend = F, line = list(color = 'black'), legendgroup = 1, hoverinfo = 'none')%>%
   add_text(x = 7.425, y = 1.61, text = "<b>*</b>", textfont = list(size = 20), hoverinfo = 'none')
 
 ui4 <-shinyUI(fixedPage(
-  selectInput("selectPlot", "Tissue", choices=c("Gastrocnemius per CS", "Soleus per CS", "Heart per CS", "Aorta per CS")),
+  selectInput("selectPlot", "Tissue", choices=c("Gastrocnemius per Citrate Synthase Activity", "Soleus per Citrate Synthase Activity", "Heart per Citrate Synthase Activity", "Aorta per Citrate Synthase Activity")),
                       plotlyOutput("plot2")))
 
 server4 <- shinyServer(function(input, output){
@@ -450,6 +450,14 @@ subplot(abs_break, abs_slope, shareY = FALSE, titleY = TRUE) %>% layout(annotati
     yanchor = "bottom",  
     showarrow = FALSE 
   )), margin = 0.02)
+```
+
+
+### Acute CSC Exposure Increases Citrate Synthase Activity
+
+```{r}
+ggplotly(CS_activity) %>%
+  layout(yaxis = list(title = "<b>Citrate Synthase Activity (AU)</b>", linewidth = 2, tickwidth = 2, tickfont = list(family = "Times New Roman Black")), xaxis = list(linewidth = 2, tickwidth = 2, tickfont = list(family = "Times New Roman Black", size = 14)))
 ```
 
 
@@ -1439,10 +1447,10 @@ shinyUI(
 
 ### **Manuscript Links**
 
-#### Substrate Utilixation Manuscript (Jan 2023 in Life Sciences): 
+#### Substrate Utilixation Manuscript (Jan 2023 in *Life Sciences*): 
 
 **Decker ST**, Matias AA, Bannon ST, Madden JP, Alexandrou-Majaj N, Layec G. Effects of cigarette smoke on in situ mitochondrial substrate oxidation of slow- and fast-twitch skeletal muscles. *Life Sci.* 2023 Jan 13;315:121376. doi: 10.1016/j.lfs.2023.121376. PMID: 36646379.
 <br>
-[Life Sciences](https://www.sciencedirect.com/science/article/abs/pii/S0024320523000103?via%3Dihub)
+*[Life Sciences](https://www.sciencedirect.com/science/article/abs/pii/S0024320523000103?via%3Dihub)*
 <br>
 [PubMed](https://pubmed.ncbi.nlm.nih.gov/36646379/)
