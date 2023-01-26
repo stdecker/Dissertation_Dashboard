@@ -12,7 +12,6 @@ output:
     self_contained: FALSE
     theme: simplex
     css: ./data/includes/css_setup.css
-    runtime: shiny
     output: html_document
 ---
 
@@ -270,44 +269,41 @@ ggplotly(abs_line)%>%
 
 ### CSC Impairs Respiration in All Tissues
 
+#### Gastrocnemius
 
 ```{r}
 
-`Gastrocnemius` <- #Gastrocnemius_line
 ggplotly(Gastrocnemius_line) %>%
    layout(yaxis = list(title = "<b><i>J</i><sub>O<sub>2</sub></sub> (pmol<sub>O<sub>2</sub></sub>/sec/mg<sub>wt</sub>)</b>", linewidth = 2, tickwidth = 2, tickfont = list(family = "Times New Roman Black")), xaxis = list(linewidth = 2, tickwidth = 2, tickfont = list(family = "Times New Roman Black", size = 14)), margin = 0) %>%
   add_lines(x = c(7.2, 7.2, 7.5, 7.5), y = c(55,55,55,55), showlegend = F, line = list(color = 'black'), legendgroup = 1, hoverinfo = 'none')%>%
   add_text(x = 7.35, y = 55.5, text = "<b>*</b>", textfont = list(size = 20), hoverinfo = 'none')
+```
 
-`Soleus` <- #Soleus_line
+#### Soleus
+
+```{r}
 ggplotly(Soleus_line) %>%
    layout(yaxis = list(title = "<b><i>J</i><sub>O<sub>2</sub></sub> (pmol<sub>O<sub>2</sub></sub>/sec/mg<sub>wt</sub>)</b>", linewidth = 2, tickwidth = 2, tickfont = list(family = "Times New Roman Black")), xaxis = list(linewidth = 2, tickwidth = 2, tickfont = list(family = "Times New Roman Black", size = 14)), margin = 0) %>%
   add_lines(x = c(6.75, 6.75, 7.5, 7.5), y = c(110,110,110,110), showlegend = F, line = list(color = 'black'), legendgroup = 1, hoverinfo = 'none') %>%
   add_text(x = 7.125, y = 111, text = "<b>*</b>", textfont = list(size = 20), hoverinfo = 'none')
+```
 
-`Heart` <- #Heart_line
+#### Heart
+
+```{r}
 ggplotly(Heart_line) %>%
    layout(yaxis = list(title = "<b><i>J</i><sub>O<sub>2</sub></sub> (pmol<sub>O<sub>2</sub></sub>/sec/mg<sub>wt</sub>)</b>", linewidth = 2, tickwidth = 2, tickfont = list(family = "Times New Roman Black")), xaxis = list(linewidth = 2, tickwidth = 2, tickfont = list(family = "Times New Roman Black", size = 14)), margin = 0) %>%
   add_lines(x = c(7.25, 7.25, 7.5, 7.5), y = c(325,325,325,325), showlegend = F, line = list(color = 'black'), legendgroup = 1, hoverinfo = 'none')%>%
   add_text(x = 7.375, y = 327, text = "<b>*</b>", textfont = list(size = 20), hoverinfo = 'none')
+```
 
-`Aorta` <- #Aorta_line
+#### Aorta
+
+```{r}
 ggplotly(Aorta_line) %>%
    layout(yaxis = list(title = "<b><i>J</i><sub>O<sub>2</sub></sub> (pmol<sub>O<sub>2</sub></sub>/sec/mg<sub>wt</sub>)</b>", linewidth = 2, tickwidth = 2, tickfont = list(family = "Times New Roman Black")), xaxis = list(linewidth = 2, tickwidth = 2, tickfont = list(family = "Times New Roman Black", size = 14)), margin = 0) %>%
   add_lines(x = c(7.35, 7.35, 7.5, 7.5), y = c(27.5,27.5,27.5,27.5), showlegend = F, line = list(color = 'black'), legendgroup = 1, hoverinfo = 'none')%>%
   add_text(x = 7.425, y = 28, text = "<b>*</b>", textfont = list(size = 20), hoverinfo = 'none')
-
-ui3 <-shinyUI(fixedPage(
-  selectInput("selectPlot", "Tissue", choices=c("Gastrocnemius", "Soleus", "Heart", "Aorta")),
-                      plotlyOutput("plot")))
-
-server3 <- shinyServer(function(input,output){
-  output$plot <- renderPlotly({
-    return(get(input$selectPlot)) # get("p1") from the workspace returns the object p1, which is a plotly object
-  })
-})
-
- shinyApp(ui3,server3, options = list(height = 625))
 
 ```
 
@@ -374,40 +370,43 @@ ggplotly(CS_line) %>%
 
 ### CSC Impairs Respiration Normalized to Citrate Synthase Activity
 
+#### Gastrocnemius
+
 ```{r}
 
-`Gastrocnemius per Citrate Synthase Activity` <- ggplotly(Gastrocnemius_CSline) %>%
+ggplotly(Gastrocnemius_CSline) %>%
    layout(yaxis = list(title = "<b><i>J</i><sub>O<sub>2</sub></sub> (pmol<sub>O<sub>2</sub></sub>/sec/CS)</b>", linewidth = 2, tickwidth = 2, tickfont = list(family = "Times New Roman Black")), xaxis = list(linewidth = 2, tickwidth = 2, tickfont = list(family = "Times New Roman Black", size = 14)), margin = 0) %>%
   add_lines(x = c(7.2, 7.2, 7.5, 7.5), y = c(10,10,10,10), showlegend = F, line = list(color = 'black'), legendgroup = 1, hoverinfo = 'none') %>%
   add_text(x = 7.35, y = 10.05, text = "<b>*</b>", textfont = list(size = 20), hoverinfo = 'none')
+```
 
+#### Soleus
 
-`Soleus per Citrate Synthase Activity` <- ggplotly(Soleus_CSline) %>%
+```{r}
+
+ggplotly(Soleus_CSline) %>%
 layout(yaxis = list(title = "<b><i>J</i><sub>O<sub>2</sub></sub> (pmol<sub>O<sub>2</sub></sub>/sec/CS)</b>", linewidth = 2, tickwidth = 2, tickfont = list(family = "Times New Roman Black")), xaxis = list(linewidth = 2, tickwidth = 2, tickfont = list(family = "Times New Roman Black", size = 14)), margin = 0) %>%
   add_lines(x = c(6.75, 6.75, 7.5, 7.5), y = c(7.5,7.5,7.5,7.5), showlegend = F, line = list(color = 'black'), legendgroup = 1, hoverinfo = 'none') %>%
   add_text(x = 7.125, y = 7.55, text = "<b>*</b>", textfont = list(size = 20), hoverinfo = 'none')
+```
 
-`Heart per Citrate Synthase Activity` <- ggplotly(Heart_CSline) %>%
+#### Heart
+
+```{r}
+ggplotly(Heart_CSline) %>%
 layout(yaxis = list(title = "<b><i>J</i><sub>O<sub>2</sub></sub> (pmol<sub>O<sub>2</sub></sub>/sec/CS)</b>", linewidth = 2, tickwidth = 2, tickfont = list(family = "Times New Roman Black")), xaxis = list(linewidth = 2, tickwidth = 2, tickfont = list(family = "Times New Roman Black", size = 14)), margin = 0) %>%
   add_lines(x = c(7.25, 7.25, 7.5, 7.5), y = c(6.25,6.25,6.25,6.25), showlegend = F, line = list(color = 'black'), legendgroup = 1, hoverinfo = 'none')%>%
   add_text(x = 7.375, y = 6.3, text = "<b>*</b>", textfont = list(size = 20), hoverinfo = 'none')
+```
 
-`Aorta per Citrate Synthase Activity` <- ggplotly(Aorta_CSline) %>%
+#### Aorta
+
+```{r}
+ggplotly(Aorta_CSline) %>%
 layout(yaxis = list(title = "<b><i>J</i><sub>O<sub>2</sub></sub> (pmol<sub>O<sub>2</sub></sub>/sec/CS)</b>", linewidth = 2, tickwidth = 2, tickfont = list(family = "Times New Roman Black")), xaxis = list(linewidth = 2, tickwidth = 2, tickfont = list(family = "Times New Roman Black", size = 14)), margin = 0) %>%
   add_lines(x = c(7.35, 7.35, 7.5, 7.5), y = c(1.6,1.6,1.6,1.6), showlegend = F, line = list(color = 'black'), legendgroup = 1, hoverinfo = 'none')%>%
   add_text(x = 7.425, y = 1.61, text = "<b>*</b>", textfont = list(size = 20), hoverinfo = 'none')
 
-ui4 <-shinyUI(fixedPage(
-  selectInput("selectPlot", "Tissue", choices=c("Gastrocnemius per Citrate Synthase Activity", "Soleus per Citrate Synthase Activity", "Heart per Citrate Synthase Activity", "Aorta per Citrate Synthase Activity")),
-                      plotlyOutput("plot2")))
-
-server4 <- shinyServer(function(input, output){
-  output$plot2 <- renderPlotly({
-    return(get(input$selectPlot)) # get("p1") from the workspace returns the object p1, which is a plotly object
-  })
-})
-
-shinyApp(ui4,server4, options = list(height = 625))
 ```
 
 
