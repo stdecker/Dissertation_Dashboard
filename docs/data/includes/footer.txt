@@ -1,0 +1,23 @@
+<!-- Site footer -->
+<footer class="site-footer">
+      <div class="container">
+            <hr>
+      </div>
+      <div class="container">
+            <div class="row">
+                  <div class="col-md-8 col-sm-6 col-xs-12">
+                        <p class="copyright-text">&copy; 2022 by Stephen Decker under GPL v. 3.
+                              <a href="#">License</a>.
+                        </p>
+                  </div>
+
+                  <div class="col-md-4 col-sm-6 col-xs-12">
+                        <ul class="social-icons">
+                              <li><a class="github" href="https://github.com/sdecker4"><i class="fab fa-github"></i></a></li>
+                              <li><a class="twitter" href="https://twitter.com/decker_st"><i class="fa fa-twitter"></i></a></li>
+                              <li><a class="linkedin" href="https://www.linkedin.com/in/deckerst/"><i class="fa fa-linkedin"></i></a></li>
+                        </ul>
+                  </div>
+            </div>
+      </div>
+</footer>

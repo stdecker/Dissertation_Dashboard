@@ -1,0 +1,1615 @@
+---
+title: "Mechanisms of Cigarette Smoke-Induced Mitochondrial Dysfunction in Striated Muscles and Aorta"
+author: "by Stephen Decker, Ph.D., ACSM-CEP"
+output: 
+  flexdashboard::flex_dashboard:
+    orientation: rows
+    vertical_layout: scroll
+    includes:
+      after_body: ./data/includes/footer.html
+    social: menu
+    source_code: embed
+    self_contained: FALSE
+    theme: simplex
+    css: ./data/includes/css_setup.css
+    output: html_document
+---
+
+
+```{r setup, include=FALSE, warning=FALSE}
+library(flexdashboard)
+library(readxl)
+library(dplyr)
+library(tidyr)
+library(ggpubr)
+library(reshape2)
+library(data.table)
+library(rstatix)
+library(plyr)
+library(drc)
+library(ggnewscale)
+library(scales)
+library(RColorBrewer)
+library(ggnewscale)
+library(EnvStats)
+library(ggprism)
+library(kableExtra)
+library(tidyverse)
+library(rvg)
+library(flextable)
+library(officer)
+library(officedown)
+library(knitr)
+library(shiny)
+library(plotly)
+library(shinyjs)        
+useShinyjs(rmd = TRUE)
+library(plotrix)
+library(colorspace)
+library(jpeg)
+library("png")
+library(magick)
+library(fontawesome)
+library(bslib)
+```
+
+
+<style>
+
+body {
+padding-top:5%
+}
+
+.sidebar { overflow: auto; padding-top:10%}
+
+.chart-shim {
+    overflow-y: scroll;
+    }
+
+</style>
+
+<style type="text/css"> .sidebar { overflow: auto; padding-top:10%} </style>
+
+# Overview {data-icon="fa-project-diagram"}
+
+## Row
+
+### `r fontawesome::fa("users")` **Acknowledgements**
+
+I'd like to first thank my family (Rachel, Allie, and Kyra) and parents for their unwavering support in this project. I'd also like to acknowledge my mentor, Gwenael Layec, and my dissertation committee members for their feedback, as well as my labmates (especially Alexs Matias, Jack Madden, and Sean Bannon) for their contributions to these works.
+
+
+## Row
+
+### **Project Abstract**
+
+&emsp; Cigarette Smoke is a significant cause of morbidity and mortality in the United States, accounting for over 480,000 annual deaths. Of these deaths, the most common cause of mortality in chronic smokers is cardiometabolic diseases. Likewise, a significant portion of smokers experience some form of cardiac, vascular, or metabolic dysfunction throughout their lifetime. More specifically, smoking is shown to induce mitochondrial dysfunction in these tissues, causing an increase in oxidative damage and poor overall health. However, despite the advances in the health outcomes related to cigarette smoke exposure, the mechanisms underlying mitochondrial dysfunction in striated muscle and the vasculature remain largely unexplained. Particularly, no investigations have been conducted to **(1) characterize the acute inhibitory effects of cigarette smoke to the mitochondria in these tissues**, **(2) assess the changes in mitochondrial substrate oxidation with exposure to cigarette smoke**, or **(3) identify the mechanisms by which cigarette smoke induces deleterious effects on the mitochondrial electron transport chain.** Therefore, the purpose of this dissertation is to use high-resolution respirometry to characterize the toxicity of cigarette smoke in the mitochondria of the aorta, heart, and two types of skeletal muscle, determine the capacity for cigarette smoke to induce a shift in mitochondrial carbohydrate- or fatty acid-stimulated mitochondrial respiration, and further investigate the mechanisms by which cigarette smoke impairs the mitochondrial electron transport chain.<br>
+&emsp; Herein, we first demonstrate that **cigarette smoke-induced inhibition of mitochondrial respiration is tissue-specific** and depends on the intrinsic qualities of the mitochondria in each tissue (e.g. morphology) as well as the tissue-specific mitochondrial content. Second, we further support the hypothesis that **mitochondrial complex I is a primary site of smoke-induced mitochondrial dysfunction.** Furthermore, we also identify the **ADP/ATP transporter, ANT, as another site of smoke-induced mitochondrial impairment.** Third, we show that **mitochondrial pyruvate oxidation, not fatty acid oxidation, is a primary mechanism for cigarette smoke-induced mitochondrial dysfunction.** Lastly, we discuss the clinical implications of each of these findings as well as future research directions.
+	
+## Row
+
+### **Purpose**
+
+As of 2022, no investigations have been conducted to...
+
+-   fully characterize the dose-response of cigarette smoke on mitochondria,
+
+-   optimize a model of cigarette smoke-induced mitochondrial function,
+
+-   elucidate the mechanisms of cigarette smoke-induced mitochondrial dysfunciton,
+
+-   or investigate the changes to mitochondrial substrate utilization.
+
+### **Study Aims**
+
+[**Aim 1:**](#Aim1) Establish a dose response relationship between the concentration of cigarette smoke to and its inhibitory effects on mitochondrial function.
+
+-   [Supplementary Aim 1:](#Sup1) Develop an *in situ* model of cigarette smoke-induced mitochondrial dysfunction that mimics the degree of mitochondrial dysfunction observed in humans (30-50% of controls).  
+
+[**Aim 2:**](#Aim2) Identify molecular targets of cigarette smoke-induced mitochondrial dysfunction.
+
+-   [Supplementary Aim 2:](#Sup2) Investigate the effects of cigarette smoke on mitochondria-derived ROS production.
+
+[**Aim 3:**](#Aim3) Investigate how cigarette smoke alters mitochondrial carbohydrate and fatty acid utilization.
+
+
+	
+## Column
+
+### **Study Outline**
+
+```{r, fig.height=7, fig.width=7}
+img_outline <- image_read("data/Images/8 - copy of All.png")
+
+img_outline
+```
+
+
+### **Main Conclusions**
+
+```{r, fig.height=7, fig.width=7}
+img_mainresults <- image_read("data/Images/Concepts.png")
+
+img_mainresults
+```
+
+## Row
+
+### **License & Disclaimers**
+This project is licensed under the [Creative Commons Attribution 4.0 International (CC BY 4.0)](https://creativecommons.org/licenses/by/4.0/).
+<br>
+<br>
+
+For more information on the UMass O2M lab, please visit [the website](https://sites.google.com/umass.edu/o2m-laboratory/home?pli=1) or [follow us on Twitter](https://twitter.com/UmassO2MLab).
+<br>
+<br>
+
+All authors have no conflicts of interest to declare. This work was funded in part by grants from the NIH National Heart, Lung, and Blood Institute (R00HL125756). All work for these projects were performed at the [University of Massachusetts Institute for Applied Life Sciences (IALS)](https://www.umass.edu/ials/). I would like to acknowledge the [IALS Center for Human Health & Performance](https://www.umass.edu/ials/ch2p) for their use of equipment for these projects; my dissertation committee members: Gwenael Layec (primary mentor), Jane Kent, Ned Debold, and David Marcinek for their time and insight; and Matt Campbell for help with the H<sub>2</sub>O<sub>2</sub> experiments. 
+<br>
+<br>
+
+All illustrations were created using [BioRender.com](biorender.com), of which I am currently a Campus Ambassador. My role as a Campus Ambassador is to promote BioRender in public and at universities, and in exchange I am given a free BioRender account, swag, and early access to new features. I do not recieve monetary compensation for this service.
+<br>
+<br>
+
+####
+```{r fig.align='center', out.width=225}
+img_BR <- image_read("data/Images/BRLogo.png")
+img_BR
+```
+
+
+# `r fontawesome::fa("list")` Abstracts
+
+
+## Row {.tabset data-height=850}
+
+
+### **Aim 1: Acute Titrations**
+
+#### Abstract
+
+&emsp; Epidemiological and clinical evidence suggests that cigarette smoke exposure elicits a tissue-specific and dose-dependent insult to mitochondrial function, possibly leading to cardiometabolic disease. However, the susceptibility and sensitivity of skeletal, cardiac, and vascular smooth muscle to cigarette smoke-induced mitochondrial dysfunction is unknown. Accordingly, using a piecewise linear regression to estimate the breakpoint and slope following the breakpoint, this study aimed to establish the tissue-specific susceptibility and sensitivity to cigarette smoke-induced inhibition of mitochondrial respiration in the gastrocnemius, soleus, heart, and aorta. In terms of absolute respiration, the aorta (BREAKPOINT: 480.2 ± 243.1 μg/mL) was the least susceptible compared to the heart (BREAKPOINT: 107.5 ± 37.3 μg/mL; p = 0.001) and the gastrocnemius (BREAKPOINT: 147.5 ± 113.0 μg/mL; p = 0.005), but not soleus (BREAKPOINT: 213.8 ± 124.2 μg/mL). Likewise, the heart (SLOPE: -145.1 ± 45.5 JO2/[CSC]) was the most sensitive, followed by the soleus (SLOPE: -54.6 ± 13.3 JO2/[CSC]), and, lastly, the gastrocnemius (SLOPE: -21.8 ± 7.9 JO2/[CSC]) and the aorta (SLOPE: -15.3 ± 9.5 JO2/[CSC]; all p < 0.05). However, when normalized for differences in mitochondrial content between tissues, only the aorta (SLOPE: -0.8 ± 0.4 JO2/CS/[CSC]) was significantly less sensitive than the heart (SLOPE: -2.6 ± 1.4 JO2/CS/[CSC]; p = 0.021), soleus (SLOPE: -3.4 ± 1.0 JO2/CS/[CSC]; p < 0.001), and gastrocnemius (SLOPE: -3.8 ± 1.5 JO2/CS/[CSC]; p < 0.001), suggesting intrinsic properties of the aorta that protect against cigarette smoke-induced mitochondrial toxicity. Our findings underscore the tissue specificity involved in cigarette smoke-induced mitochondrial toxicity, with the heart being most vulnerable to bioenergetic deficits induced by cigarette smoke, and mitochondria in the aorta being inherently most resistant to dysfunction. These differences may explain the variation in risks of developing cardiometabolic diseases in these tissues. 
+
+#### Summary Figure
+
+```{r fig.align='center', out.width=1000}
+aim1_outline <- image_read("data/Images/Tissue Specificity.png")
+
+aim1_outline
+```
+
+
+### **Aim 2: Mechanisms of CSC-induced Mitochondrial Dysfunction**
+
+#### Abstract
+
+&emsp; Cigarette smoke has been shown to induce mitochondrial dysfunction, thus leading to the development of chronic disease. However, the mechanisms underlying cigarette smoke-induced mitochondrial dysfunction in the skeletal muscle are still poorly understood. Accordingly, this study aimed to elucidate the molecular targets of cigarette smoke in the mitochondria of permeabilized gastrocnemius and soleus muscle fibers. Cigarette smoke decreased complex-I-driven mitochondrial respiration in the gastrocnemius (CONTROL: 45.4 ± 11.2 pmolO2/sec/mgwt and SMOKE: 27.5 ± 12.0 pmolO2/sec/mg wt; p = 0.04) and soleus (CONTROL: 63.0 ± 23.8 pmolO2/sec/mgwt and SMOKE: 44.6 ± 11.1 pmolO2/sec/mgwt; p = 0.038), resulting in a greater overall contribution of complex II on maximally stimulated respiration. The maximal activity of the electron transport chain was also significantly inhibited by cigarette smoke. Furthermore, ADP/ATP transport also appeared to be impaired in cigarette smoke-exposed gastrocnemius, as the contribution of ANT to total mitochondrial respiration was decreased (CONTROL: 2.23 ± 0.69; SMOKE: 1.21 ± 0.08; p = 0.001). However, these effects were attenuated in the soleus (CONTROL: 1.66 ± 0.42; SMOKE: 1.30 ± 0.16; p = 0.076). Interestingly, cigarette smoke did not significantly alter any markers of mitochondrial quality or thermodynamic coupling. Our findings underscore that cigarette smoke directly impairs the mitochondrial electron transport chain, especially at the site of complex I, as well as ANT, which facilitates the exchange of ADP/ATP across the inner mitochondrial membrane. These concurrent effects result in the maintenance of mitochondrial efficiency; however, total mitochondrial ATP production is indeed impaired in smoke-exposed fibers. The findings in these studies elucidate the primary targets of smoke-induced mitochondrial dysfunction and provide targets of interest for therapeutic approaches.
+
+#### Summary Figure
+
+
+```{r fig.align='center', out.width=750}
+aim2_outline <- image_read("data/Images/CAT Mechanisms.png")
+
+aim2_outline
+```
+
+
+### **Aim 3: Effects of CSC on Mitochondrial Substrate Utilization**
+
+#### Abstract
+
+&emsp; Epidemiological and clinical evidence suggests that cigarette smoke exposure alters glucose and fatty acid metabolism, leading to greater susceptibility to metabolic disorders. However, the effects of cigarette smoke exposure on mitochondrial substrate oxidation in the skeletal muscle are still poorly understood. Accordingly, this study aimed to examine the acute effects of cigarette smoke on mitochondrial respiratory capacity, sensitivity, and concurrent utilization of palmitoylcarnitine (PC), a long-chain fatty acid, and pyruvate, a product of glycolysis, in permeabilized gastrocnemius and soleus muscle fibers. Cigarette smoke decreased both mitochondrial respiratory capacity (CONTROL: 50.4 ± 11.8 pmolO2/sec/mgwt and SMOKE: 22.3 ± 4.4 pmolO2/sec/mgwt, p<0.01) and sensitivity for pyruvate (CONTROL: 0.10 ± 0.04 mM and SMOKE: 0.11 ± 0.04 mM, p < 0.01) in the gastrocnemius muscle. In the soleus, only the sensitivity for pyruvate-stimulated mitochondrial respiration trended towards a decrease (CONTROL: 0.11 ± 0.04 mM and SMOKE: 0.23 ± 0.15 mM, p = 0.08). In contrast, cigarette smoke did not significantly alter palmitoylcarnitine-stimulated mitochondrial respiration in either muscle. In the control condition, pyruvate-supported respiration was inhibited by the concurrent addition of palmitoylcarnitine in the fast-twitch gastrocnemius muscle (-27.1 ± 19.7%, p<0.05), but not in the slow-twitch soleus (-9.2 ± 17.0%). With cigarette smoke, the addition of palmitoylcarnitine augmented the maximal respiration rate stimulated by the concurrent addition of pyruvate in the gastrocnemius (+18.5 ± 39.3%, p<0.05). However, cigarette smoke still significantly impaired mitochondrial respiratory capacity with combined substrates than control (p<0.05). Our findings underscore that cigarette smoke directly impairs mitochondrial respiration of carbohydrate-derived substrates and is a primary mechanism underlying cigarette smoke-induced muscle dysfunction, which leads to a vicious cycle involving excess glucose conversion into fatty acids and lipotoxicity. 
+
+#### Summary Figure
+
+
+```{r fig.align='center', out.width=750}
+aim3_outline <- image_read("data/Images/SubSens Graphical abstract.png")
+
+aim3_outline
+```
+
+
+# `r fontawesome::fa("signal")` Acute CSC Titrations {#Aim1}
+
+## Column {.sidebar data-width="300"}
+
+<br>
+
+### Aim 1 Overview
+
+**Primary Aim:** Establish a dose response relationship between the concentration of cigarette smoke to and its inhibitory effects on mitochondrial function.
+
+**Methods**: Whole tissue samples were permeablized as outlined in the [Methods section](#Methods). Samples were weighed and then added to the O2K chambers with MiR-05.
+
+The protocol for this aim is as follows:
+
+-   Glutamate (10 mM), Malate (2 mM), ADP (5,000 mM), & Succinate (10 mM)\
+-   Cytochrome C\
+-   0.004 μg/mL CSC\
+-   0.04 μg/mL CSC\
+-   0.4 μg/mL CSC\
+-   4 μg/mL CSC\
+-   40 μg/mL CSC\
+-   400 μg/mL CSC\
+-   800 μg/mL CSC\
+-   1200 μg/mL CSC\
+-   1600 μg/mL CSC\
+-   2000 μg/mL CSC\
+-   2400 μg/mL CSC\
+
+&emsp; Oxygen was maintained at 375-450 &mu;M for heart, and 190-250 &mu;M for all other tissues. Samples with >10% increase in respiration with the addition of cytochrome C were removed from analysis. Respiration rates were normalized to wet weight, or CS activity.\
+&emsp; Piecewise linear regressions were used to determine the breakpoints and slopes of CSC-induced decreases in mitochondrial respiration.
+
+## Row {.tabset data-height=650}
+
+### Overview
+
+```{r}
+aim1_methods <- image_read("data/Images/1 - Aim1.png")
+
+aim1_methods
+```
+
+
+### CSC Impairs Absolute Respiration
+
+```{r echo=FALSE, include=FALSE}
+source("data/InflectionPoint.R")
+```
+
+
+```{r}
+ggplotly(abs_line) %>%
+   layout(yaxis = list(title = "<i>J</i><sub>O<sub>2</sub></sub> (pmol<sub>O<sub>2</sub></sub>/sec/mg<sub>wt</sub>)", linewidth = 2, tickwidth = 2, tickfont = list(family = "Arial Black", size = 12), titlefont = list(family = "Arial Black", size = 18)), 
+          xaxis = list(title = "[CSC] (&mu;g/mL)",linewidth = 2, tickwidth = 2, tickfont = list(family = "Arial Black", size = 12), titlefont = list(family = "Arial Black", size = 16)), 
+          legend = list(title = list(text = "Tissue"), font = list(family = "Arial", size = 12)))
+```
+
+
+### CSC Impairs Respiration in All Tissues
+
+#### Gastrocnemius
+
+```{r}
+ggplotly(Gastrocnemius_line) %>%
+   layout(yaxis = list(title = "<i>J</i><sub>O<sub>2</sub></sub> (pmol<sub>O<sub>2</sub></sub>/sec/mg<sub>wt</sub>)", linewidth = 2, tickwidth = 2, tickfont = list(family = "Arial Black", size = 12), titlefont = list(family = "Arial Black", size = 18)), 
+          xaxis = list(title = "[CSC] (&mu;g/mL)",linewidth = 2, tickwidth = 2, tickfont = list(family = "Arial Black", size = 12), titlefont = list(family = "Arial Black", size = 16)), margin = 0) %>%
+  add_lines(x = c(7.2, 7.2, 7.5, 7.5), y = c(55,55,55,55), showlegend = F, line = list(color = 'black'), legendgroup = 1, hoverinfo = 'none')%>%
+  add_text(x = 7.35, y = 55.5, text = "*", showlegend = F, textfont = list(size = 20), hoverinfo = 'none')
+```
+
+#### Soleus
+
+```{r}
+ggplotly(Soleus_line) %>%
+   layout(yaxis = list(title = "<i>J</i><sub>O<sub>2</sub></sub> (pmol<sub>O<sub>2</sub></sub>/sec/mg<sub>wt</sub>)", linewidth = 2, tickwidth = 2, tickfont = list(family = "Arial Black", size = 12), titlefont = list(family = "Arial Black", size = 18)), 
+          xaxis = list(title = "[CSC] (&mu;g/mL)",linewidth = 2, tickwidth = 2, tickfont = list(family = "Arial Black", size = 12), titlefont = list(family = "Arial Black", size = 16)), margin = 0) %>%
+  add_lines(x = c(6.75, 6.75, 7.5, 7.5), y = c(110,110,110,110), showlegend = F, line = list(color = 'black'), legendgroup = 1, hoverinfo = 'none') %>%
+  add_text(x = 7.125, y = 111, text = "*", showlegend = F, textfont = list(size = 20), hoverinfo = 'none')
+```
+
+#### Heart
+
+```{r}
+ggplotly(Heart_line) %>%
+   layout(yaxis = list(title = "<i>J</i><sub>O<sub>2</sub></sub> (pmol<sub>O<sub>2</sub></sub>/sec/mg<sub>wt</sub>)", linewidth = 2, tickwidth = 2, tickfont = list(family = "Arial Black", size = 12), titlefont = list(family = "Arial Black", size = 18)), 
+          xaxis = list(title = "[CSC] (&mu;g/mL)",linewidth = 2, tickwidth = 2, tickfont = list(family = "Arial Black", size = 12), titlefont = list(family = "Arial Black", size = 16)), margin = 0) %>%
+  add_lines(x = c(7.25, 7.25, 7.5, 7.5), y = c(325,325,325,325), showlegend = F, line = list(color = 'black'), legendgroup = 1, hoverinfo = 'none')%>%
+  add_text(x = 7.375, y = 327, text = "*", showlegend = F, textfont = list(size = 20), hoverinfo = 'none')
+```
+
+#### Aorta
+
+```{r}
+ggplotly(Aorta_line) %>%
+   layout(yaxis = list(title = "<i>J</i><sub>O<sub>2</sub></sub> (pmol<sub>O<sub>2</sub></sub>/sec/mg<sub>wt</sub>)", linewidth = 2, tickwidth = 2, tickfont = list(family = "Arial Black", size = 12), titlefont = list(family = "Arial Black", size = 18)), 
+          xaxis = list(title = "[CSC] (&mu;g/mL)",linewidth = 2, tickwidth = 2, tickfont = list(family = "Arial Black", size = 12), titlefont = list(family = "Arial Black", size = 16)), margin = 0) %>%
+  add_lines(x = c(7.35, 7.35, 7.5, 7.5), y = c(27.5,27.5,27.5,27.5), showlegend = F, line = list(color = 'black'), legendgroup = 1, hoverinfo = 'none')%>%
+  add_text(x = 7.425, y = 28, text = "*", showlegend = F, textfont = list(size = 20), hoverinfo = 'none')
+
+```
+
+
+### Tissue-dependent Breakpoints & Slopes
+
+
+```{r}
+abs_break <- ggplotly(individual_inflection) %>%
+  layout(yaxis = list(title = "[CSC] at Break (μg/mL)", linewidth = 2, tickwidth = 2, tickfont = list(family = "Arial Black", size = 12), titlefont = list(family = "Arial Black", size = 18)), 
+         xaxis = list(linewidth = 2, tickwidth = 2, tickfont = list(family = "Arial Black", size = 14), titlefont = list(family = "Arial Black", size = 16))) %>%
+  add_lines(x = c(1, 4, 4, 1), y = c(900,900,900,900), showlegend = F, line = list(color = 'black'), legendgroup = 1, hoverinfo = 'none') %>%
+  add_text(x = 2.5, y = 925, text = "p = 0.001, <i>d</i> = 2.6", showlegend = F, textfont = list(size = 12), hoverinfo = 'none') %>%
+  add_lines(x = c(3, 4, 4, 3), y = c(950,950,950,950), showlegend = F, line = list(color = 'black'), legendgroup = 1, hoverinfo = 'none') %>%
+  add_text(x = 3.5, y = 975, text = "p = 0.005, <i>d</i> = 2.3", showlegend = F, textfont = list(size = 12), hoverinfo = 'none')
+
+
+abs_slope <- ggplotly(individual_slope2) %>%
+  layout(yaxis = list(title = "Slope After Break (<i>J</i>O<sub>2</sub>/[CSC])", linewidth = 2, tickwidth = 2, tickfont = list(family = "Arial Black", size = 12), titlefont = list(family = "Arial Black", size = 18)), 
+         xaxis = list(linewidth = 2, tickwidth = 2, tickfont = list(family = "Arial Black", size = 14), titlefont = list(family = "Arial Black", size = 16), side = "top")) %>%
+  add_lines(x = c(1, 2, 2, 1), y = c(-235,-235,-235,-235), showlegend = F, line = list(color = 'black'), legendgroup = 1, hoverinfo = 'none') %>%
+  add_text(x = 1.5, y = -242, text = "p = 0.047, <i>d</i> = 3.5", showlegend = F, textfont = list(size = 12), hoverinfo = 'none') %>%
+  add_lines(x = c(1, 3, 3, 1), y = c(-260,-260,-260,-260), showlegend = F, line = list(color = 'black'), legendgroup = 1, hoverinfo = 'none') %>%
+  add_text(x = 2, y = -267, text = "p < 0.001, <i>d</i> = 4.8", showlegend = F, textfont = list(size = 12), hoverinfo = 'none') %>%
+  add_lines(x = c(1, 4, 4, 1), y = c(-280,-280,-280,-280), showlegend = F, line = list(color = 'black'), legendgroup = 1, hoverinfo = 'none') %>%
+  add_text(x = 2.5, y = -287, text = "p < 0.001, <i>d</i> = 5.0", showlegend = F, textfont = list(size = 12), hoverinfo = 'none') %>%
+  add_lines(x = c(2, 3, 3, 2), y = c(-120,-120,-120,-120), showlegend = F, line = list(color = 'black'), legendgroup = 1, hoverinfo = 'none') %>%
+  add_text(x = 2.5, y = -127, text = "p = 0.018, <i>d</i> = 1.3", showlegend = F, textfont = list(size = 12), hoverinfo = 'none') %>%
+  add_lines(x = c(2, 4, 4, 2), y = c(-165,-165,-165,-165), showlegend = F, line = list(color = 'black'), legendgroup = 1, hoverinfo = 'none') %>%
+  add_text(x = 3, y = -172, text = "p = 0.002, <i>d</i> = 1.5", showlegend = F, textfont = list(size = 12), hoverinfo = 'none')
+
+subplot(abs_break, abs_slope, shareY = FALSE, titleY = TRUE, margin = 0.055) %>% layout(font = list(family = "Arial Black"), annotations = list(
+  list(text = "[CSC] at Break", x = 0.2,  
+    y = 1.075,  
+    xref = "paper",  
+    yref = "paper",  
+    xanchor = "center",  
+    yanchor = "bottom",  
+    showarrow = FALSE 
+  ), list(text = "Slope After Break", x = 0.8,  
+    y = 1.075,  
+    xref = "paper",  
+    yref = "paper",  
+    xanchor = "center",  
+    yanchor = "bottom",  
+    showarrow = FALSE 
+  )), margin = 0.2)
+```
+
+
+
+### Citrate Synthase Activitiy is Different Between Tissues
+
+```{r}
+ggplotly(con_CS_activity) %>%
+   layout(font = list(family = "Arial Black"), yaxis = list(title = "CS Activity (AU)", linewidth = 2, tickwidth = 2, tickfont = list(family = "Arial Black", size = 12), titlefont = list(family = "Arial Black", size = 18)), 
+          xaxis = list(linewidth = 2, tickwidth = 2, tickfont = list(family = "Arial Black", size = 12), titlefont = list(family = "Arial Black", size = 16))) %>%
+  add_lines(x = c(1, 2, 2, 1), y = c(85,85,85,85), line = list(color = "black")) %>%
+  add_text(x = 1.5, y = 87, text = "p < 0.001, <i>d</i> = 6.4", showlegend = F, hoverinfo = "none", textfont = list(family = "Arial Black", size = 12)) %>%
+  add_lines(x = c(1, 3, 3, 1), y = c(80,80,80,80), line = list(color = "black")) %>%
+  add_text(x = 2, y = 82, text = "p < 0.001, <i>d</i> = 8.4", showlegend = F, hoverinfo = "none", textfont = list(family = "Arial Black", size = 12)) %>%
+  add_lines(x = c(1, 4, 4, 1), y = c(75,75,75,75), line = list(color = "black")) %>%
+  add_text(x = 2.5, y = 77, text = "p = 0.025, <i>d</i> = 4.3", showlegend = F, hoverinfo = "none", textfont = list(family = "Arial Black", size = 12)) %>%
+  add_lines(x = c(2, 4, 4, 2), y = c(60,60,60,60), line = list(color = "black")) %>%
+  add_text(x = 3, y = 62, text = "p < 0.001, <i>d</i> = 2.2", showlegend = F, hoverinfo = "none", textfont = list(family = "Arial Black", size = 12)) %>%
+  add_lines(x = c(3, 4, 4, 3), y = c(55,55,55,55), line = list(color = "black")) %>%
+  add_text(x = 3.5, y = 57, text = "p = 0.027, <i>d</i> = 4.2", showlegend = F, hoverinfo = "none", textfont = list(family = "Arial Black", size = 12)) %>%
+  add_lines(x = c(2, 3, 3, 2), y = c(35,35,35,35), line = list(color = "black")) %>%
+  add_text(x = 2.5, y = 37, text = "p = 0.025, <i>d</i> = 2.0", showlegend = F, hoverinfo = "none", textfont = list(family = "Arial Black", size = 12))
+```
+
+
+### Respiration Normalized to Citrate Synthase Activities
+
+```{r}
+ggplotly(CS_line) %>%
+   layout(font = list(family = "Arial Black"), yaxis = list(title = "<i>J</i><sub>O<sub>2</sub></sub> (pmol<sub>O<sub>2</sub></sub>/sec/CS)", linewidth = 2, tickwidth = 2, tickfont = list(family = "Arial Black", size = 12), titlefont = list(family = "Arial Black", size = 18)), 
+          xaxis = list(title = "[CSC] (&mu;g/mL)",linewidth = 2, tickwidth = 2, tickfont = list(family = "Arial Black", size = 12), titlefont = list(family = "Arial Black", size = 16)), 
+          legend = list(title = list(text = "Tissue"), font = list(family = "Arial", size = 12)))
+```
+
+
+### CSC Impairs Respiration Normalized to Citrate Synthase Activity
+
+#### Gastrocnemius
+
+```{r}
+
+ggplotly(Gastrocnemius_CSline) %>%
+   layout(font = list(family = "Arial Black"), yaxis = list(title = "<i>J</i><sub>O<sub>2</sub></sub> (pmol<sub>O<sub>2</sub></sub>/sec/CS)", linewidth = 2, tickwidth = 2, tickfont = list(family = "Arial Black", size = 12), titlefont = list(family = "Arial Black", size = 18)), 
+          xaxis = list(title = "[CSC] (&mu;g/mL)",linewidth = 2, tickwidth = 2, tickfont = list(family = "Arial Black", size = 12), titlefont = list(family = "Arial Black", size = 16)), margin = 0) %>%
+  add_lines(x = c(7.2, 7.2, 7.5, 7.5), y = c(10,10,10,10), showlegend = F, line = list(color = 'black'), legendgroup = 1, hoverinfo = 'none') %>%
+  add_text(x = 7.35, y = 10.05, text = "*", textfont = list(size = 20), showlegend = F, hoverinfo = 'none')
+```
+
+#### Soleus
+
+```{r}
+
+ggplotly(Soleus_CSline) %>%
+layout(font = list(family = "Arial Black"), yaxis = list(title = "<i>J</i><sub>O<sub>2</sub></sub> (pmol<sub>O<sub>2</sub></sub>/sec/CS)", linewidth = 2, tickwidth = 2, tickfont = list(family = "Arial Black", size = 12), titlefont = list(family = "Arial Black", size = 18)), 
+          xaxis = list(title = "[CSC] (&mu;g/mL)",linewidth = 2, tickwidth = 2, tickfont = list(family = "Arial Black", size = 12), titlefont = list(family = "Arial Black", size = 16)), margin = 0) %>%
+  add_lines(x = c(6.75, 6.75, 7.5, 7.5), y = c(7.5,7.5,7.5,7.5), showlegend = F, line = list(color = 'black'), legendgroup = 1, hoverinfo = 'none') %>%
+  add_text(x = 7.125, y = 7.55, text = "*", textfont = list(size = 20), showlegend = F, hoverinfo = 'none')
+```
+
+#### Heart
+
+```{r}
+ggplotly(Heart_CSline) %>%
+layout(font = list(family = "Arial Black"), yaxis = list(title = "<i>J</i><sub>O<sub>2</sub></sub> (pmol<sub>O<sub>2</sub></sub>/sec/CS)", linewidth = 2, tickwidth = 2, tickfont = list(family = "Arial Black", size = 12), titlefont = list(family = "Arial Black", size = 18)), 
+          xaxis = list(title = "[CSC] (&mu;g/mL)",linewidth = 2, tickwidth = 2, tickfont = list(family = "Arial Black", size = 12), titlefont = list(family = "Arial Black", size = 16)), margin = 0) %>%
+  add_lines(x = c(7.25, 7.25, 7.5, 7.5), y = c(6.25,6.25,6.25,6.25), showlegend = F, line = list(color = 'black'), legendgroup = 1, hoverinfo = 'none')%>%
+  add_text(x = 7.375, y = 6.3, text = "*", textfont = list(size = 20), showlegend = F, hoverinfo = 'none')
+```
+
+#### Aorta
+
+```{r}
+ggplotly(Aorta_CSline) %>%
+layout(yaxis = list(title = "<i>J</i><sub>O<sub>2</sub></sub> (pmol<sub>O<sub>2</sub></sub>/sec/CS)", linewidth = 2, tickwidth = 2, tickfont = list(family = "Arial Black", size = 12), titlefont = list(family = "Arial Black", size = 18)), 
+          xaxis = list(title = "[CSC] (&mu;g/mL)",linewidth = 2, tickwidth = 2, tickfont = list(family = "Arial Black", size = 12), titlefont = list(family = "Arial Black", size = 16)), margin = 0) %>%
+  add_lines(x = c(7.35, 7.35, 7.5, 7.5), y = c(1.6,1.6,1.6,1.6), showlegend = F, line = list(color = 'black'), legendgroup = 1, hoverinfo = 'none')%>%
+  add_text(x = 7.425, y = 1.61, text = "*", textfont = list(size = 20), showlegend = F, hoverinfo = 'none')
+
+```
+
+
+### Aorta is Intrinsically Less Susceptible & Sensitive
+
+```{r}
+rel_break <- ggplotly(CS_individual_inflection) %>%
+  layout(font = list(family = "Arial Black"), yaxis = list(title = "[CSC] at Break (μg/mL)", linewidth = 2, tickwidth = 2, tickfont = list(family = "Arial Black", size = 12), titlefont = list(family = "Arial Black", size = 18)), 
+         xaxis = list(linewidth = 2, tickwidth = 2, tickfont = list(family = "Arial Black", size = 14), titlefont = list(family = "Arial Black", size = 16))) %>%
+  add_lines(x = c(1, 4, 4, 1), y = c(1050,1050,1050,1050), showlegend = F, line = list(color = 'black'), legendgroup = 1, hoverinfo = 'none') %>%
+  add_text(x = 2.5, y = 1075, text = "p < 0.001, <i>d</i> = 2.6", showlegend = F, textfont = list(size = 12), hoverinfo = 'none')%>%
+  add_lines(x = c(3, 4, 4, 3), y = c(900,900,900,900), showlegend = F, line = list(color = 'black'), legendgroup = 1, hoverinfo = 'none') %>%
+  add_text(x = 3.5, y = 925, text = "p = 0.008, <i>d</i> = 2.2", showlegend = F, textfont = list(size = 12), hoverinfo = 'none') %>%
+  add_lines(x = c(1, 2, 2, 1), y = c(450,450,450,450), showlegend = F, line = list(color = 'black'), legendgroup = 1, hoverinfo = 'none') %>%
+  add_text(x = 1.5, y = 475, text = "p = 0.031, <i>d</i> = 0.9", showlegend = F, textfont = list(size = 12), hoverinfo = 'none')
+
+
+rel_slope <- ggplotly(CS_individual_slope) %>%
+  layout(font = list(family = "Arial Black"), yaxis = list(title = "Slope After Break (<i>J</i>O<sub>2</sub>/[CSC])", linewidth = 2, tickwidth = 2, tickfont = list(family = "Arial Black", size = 12), titlefont = list(family = "Arial Black", size = 18)), 
+         xaxis = list(linewidth = 2, tickwidth = 2, tickfont = list(family = "Arial Black", size = 14), titlefont = list(family = "Arial Black", size = 16), side = "top")) %>%
+  add_lines(x = c(1, 4, 4, 1), y = c(-7.5,-7.5,-7.5,-7.5), showlegend = F, line = list(color = 'black'), legendgroup = 1, hoverinfo = 'none') %>%
+  add_text(x = 2.5, y = -7.75, text = "p = 0.022, <i>d</i> = 1.6", showlegend = F, textfont = list(size = 12), hoverinfo = 'none') %>%
+  add_lines(x = c(2, 4, 4, 2), y = c(-7,-7,-7,-7), showlegend = F, line = list(color = 'black'), legendgroup = 1, hoverinfo = 'none') %>%
+  add_text(x = 3, y = -7.25, text = "p < 0.001, <i>d</i> = 2.2", showlegend = F, textfont = list(size = 12), hoverinfo = 'none') %>%
+  add_lines(x = c(3, 4, 4, 3), y = c(-6.5,-6.5,-6.5,-6.5), showlegend = F, line = list(color = 'black'), legendgroup = 1, hoverinfo = 'none') %>%
+  add_text(x = 3.5, y = -6.75, text = "p < 0.001, <i>d</i> = 2.7", showlegend = F, textfont = list(size = 12), hoverinfo = 'none') 
+
+subplot(rel_break, rel_slope, shareY = FALSE, titleY = TRUE, margin = 0.055) %>% layout(font = list(family = "Arial Black"), annotations = list(list(text = "<b>[CSC] at Break </b>", x = 0.2,  
+    y = 1.075,  
+    xref = "paper",  
+    yref = "paper",  
+    xanchor = "center",  
+    yanchor = "bottom",  
+    showarrow = FALSE 
+  ), list(text = "<b>Slope After Break</b>", x = 0.8,  
+    y = 1.075,  
+    xref = "paper",  
+    yref = "paper",  
+    xanchor = "center",  
+    yanchor = "bottom",  
+    showarrow = FALSE 
+  )), margin = 0.02)
+```
+
+
+### Acute CSC Exposure Increases Citrate Synthase Activity
+
+```{r}
+ggplotly(CS_activity) %>%
+  layout(font = list(family = "Arial Black"), yaxis = list(title = "Citrate Synthase Activity (AU)", linewidth = 2, tickwidth = 2, tickfont = list(family = "Arial Black", size = 12), titlefont = list(family = "Arial Black", size = 18)), 
+         xaxis = list(linewidth = 2, tickwidth = 2, tickfont = list(family = "Arial Black", size = 14), titlefont = list(family = "Arial Black", size = 16))) %>%
+  add_lines(x = c(0.75, 1.25, 1.25, 0.75), y = c(85,85,85,85), line = list(color = "black")) %>%
+  add_text(x = 1, y = 87, text = "p = 0.475, <i>d</i> = 0.25", showlegend = F, hoverinfo = "none", textfont = list(family = "Arial Black", size = 12)) %>%
+  add_lines(x = c(1.75, 2.25, 2.25, 1.75), y = c(50,50,50,50), line = list(color = "black")) %>%
+  add_text(x = 2, y = 52, text = "p = 0.241, <i>d</i> = 0.41", showlegend = F, hoverinfo = "none", textfont = list(family = "Arial Black", size = 12)) %>%
+  add_lines(x = c(2.75, 3.25, 3.25, 2.75), y = c(20,20,20,20), line = list(color = "black")) %>%
+  add_text(x = 3, y = 22, text = "p = 0.024, <i>d</i> = 1.07", showlegend = F, hoverinfo = "none", textfont = list(family = "Arial Black", size = 12)) %>%
+  add_lines(x = c(3.75, 4.25, 4.25, 3.75), y = c(70,70,70,70), line = list(color = "black")) %>%
+  add_text(x = 4, y = 72, text = "p = 0.055, <i>d</i> = 0.93", showlegend = F, hoverinfo = "none", textfont = list(family = "Arial Black", size = 12))
+```
+
+
+## Row
+
+### **Conclusions**
+
+&emsp; In conclusion, this study revealed the sensitivity and susceptibility characteristics of cigarette smoke-induced mitochondrial dysfunction in gastrocnemius, soleus, heart, and aorta. Collectively, the results from these studies suggest that inherent characteristics of mitochondria in the aorta increase the resistance to CSC-induced bioenergetic deficits. On the other hand, the CSC-induced insults to mitochondrial respiration in striated muscles are largely dependent on the mitochondrial density of these tissues. However, considering the range of bioenergetic demand in these tissues, especially cardiac muscle, even minor deficits in oxidative ATP production could lead to severe bioenergetic deficits and cellular dysfunction. Thus, the findings in the present study characterized the direct changes to mitochondrial respiration in a range of muscle types that are severely altered by cigarette smoke exposure, thus contributing cigarette smoke exposure to the development of several chronic cardiometabolic diseases.
+
+
+## Row
+
+### **Summary Diagram**
+
+```{r}
+aim1_outline
+```
+
+
+# `r fontawesome::fa("smoking")` Model Development {#Sup1}
+
+```{r, echo=FALSE, include=FALSE}
+source('data/Incubation_pilot.R')
+```
+
+## Row
+
+### **Model Development**
+
+I did a lot of work to develop a model of CSC-induced mitochondrial dysfunction that reflected the loss of mitochondrial function observed in mice and humans exposed to chronic cigarette smoke.\* Most studies report a range of ~25% loss of state III-driven respiration (stimulated by glutamate & malate, succinate, and ADP) in both *in vivo* and *in aitu* models. Our goal was to find the appropriate concentration of CSC that impaired mitochondrial function by ~20-30% **without inducing too many cytochrome C responses** (which ultimately indicates irreversible damage to the mitochondrial electron transport chain via damage to the ETC proteins or the inner mitochondrial membrane). Smoke can cause the release of cytochrome C from the inner mitochondrial membrane, so we had to be cautious in determining the concentration and duration of our incubation where we could induce damage without compromising mitochondrial function too much, as appears to be the case *in vivo*.
+
+\**Note that the following data are unpublished and thus, I have made the data unavailable for now. Please contact me if you would like to access the data*
+
+
+
+## Row {.tabset data-height=650}
+
+### **Smoke at *in vivo* Concentrations has no Effect**
+
+I first tried to attempt to use physiological concentrations of CSC to induce mitochondrial dysfunction. Studies have reported that physiological blood concentrations of cigarette smoke particulates would amount to ~0.004-0.4 &mu;g/mL (0.001-0.1% of the solution in our incubation protocols). We found out that these concentrations were too low to have any major effect. Since the cigarette smoke particulate lingers in the blood, we also tried to see if time also had an effect. It didn't do much until the 6-hour mark (and even then it wasn't conclusive). We also tried permeabilizing the fibers first compared to incubating first. Also no major effect.
+
+#### In Gastroc
+```{r, fig.width=12}
+incubation_GMDS_plot
+```
+
+#### Unchanged RCR
+```{r, fig.width=12}
+incubation_rcr_plot
+```
+
+
+### **Low Concentrations of CSC had Small Effects, Permeabilization had no Effect**
+
+I then attempted to see if higher concentrations would have an effect. I also tried to see if CSC had more of an effect if the tissues were permeabilized. Higher concentrations did induce more dysfunction, but permeabilization didn't appear to help much.
+
+#### In Gastrocnemius
+```{r, fig.width=15}
+gastroc_higher_concentrations
+```
+
+#### Unchanged RCR
+
+```{r, fig.width=12}
+high_rcr
+```
+
+#### In Soleus
+```{r, fig.width=15}
+soleus_higher_concentrations
+```
+
+#### In Aorta
+```{r, fig.width=15}
+aorta_higher_concentrations
+```
+
+
+
+### **4% CSC Seemed to be the Sweet Spot**
+
+I then tried higher concentrations of CSC, ranging from 0% CSC to 5% CSC to optimize the concentration without having a cytochrome C effect. Many published studies used up to double or triple of those concentrations, but I really wanted to focus on minimizing the CSC to reflect the *in vivo* human experience without going off the deep end. It appeard that 4% CSC incubated for 1-hour was the sweet spot. We got ~25% inhibition in state III respiration, and weren't getting too many cytochrome C responses. We were getting quite a bit more cytochrome C responses at 5% CSC, and 3% CSC was just under our target range of mitochondrial dysfunction. These effects were more pronounced in the gastrocnemius than soleus, but that may have been due to the soleus fibers sitting in BIOPS preservation solution too long as we didn't see these same issues in our published data.
+
+#### In Gastroc
+```{r, fig.width=15}
+cowplot::plot_grid(`0-5_Gastroc`, incubation_es)
+```
+
+#### Gastroc % Change with 95% CI
+
+```{r, fig.width=15}
+cowplot::plot_grid(gastroc_incubation_percent_change, gastroc_95CI)
+```
+
+#### In Soleus
+```{r, fig.width=15}
+cowplot::plot_grid(`0-5_Soleus`, soleus_incubation_es)
+```
+
+#### Soleus % Change with 95% CI
+
+```{r, fig.width=15}
+cowplot::plot_grid(soleus_incubation_percent_change, soleus_95CI)
+```
+
+
+
+# `r fontawesome::fa("gears")` Mechanisms {#Aim2}
+
+```{r include=FALSE, echo=FALSE, warning=FALSE}
+source("data/Aim_3_Data_Final.R")
+```
+
+
+## Column {.sidebar data-width="300"}
+
+<br>
+
+### Aim 2 Overview
+
+**Primary Aim:** Examine the molecular targets and mechanisms by which CSC inhibits mitochondrial respiration in permeabilized skeletal muscle fiber bundles.
+
+**Methods**: Permeablized gastrocnemius and soleus muscle bundles were prepared as outlined in the [Methods section](#Methods). Samples were weighed and then added to the O2K chambers with MiR-05.
+
+The protocol for this aim is as follows:
+
+*   Glutamate (10 mM) & Malate (2 mM)\
+*   ADP titrations
+ <ul class="roman">
+ <li>25 &mu;M</li>
+ <li>50 &mu;M</li>
+ <li>100 &mu;M</li>
+ <li>250 &mu;M</li>
+ <li>5000 &mu;M</li>
+</ul>
+*   Succinate (10 mM)
+*   Cytochrome C\
+*   Carboxyatractyloside (CAT) titrations
+<ul class="roman">
+ <li>0.05 &mu;M</li>
+ <li>0.1 &mu;M</li>
+ <li>0.2 &mu;M</li>
+ <li>1.0 &mu;M</li>
+ <li>5.0 &mu;M</li>
+</ul>  
+*   FCCP (stepwise)\
+*   Rotenone\
+*   Antimycin A & Oligomycin\
+
+
+&emsp; Oxygen was maintained at 190-250 &mu;M for all other tissues. Samples with >10% increase in respiration with the addition of cytochrome C were removed from analysis. Respiration rates were normalized to wet weight.\
+&emsp; ADP kinetics were fitted to a modified Michaelis-Menten equation, as follows:\
+
+$$JO_2 = C + \frac{V_{max} - C}{1 + \frac{K_m}{[S]}}$$\
+
+where <i>J</i>O<sub>2</sub> is the respiration rate, [S] is the concentration of ADP, C is the respiration rate at [S] = 0, V<sub>max</sub> is the upper limit of <i>J</i>O<sub>2</sub>, and K<sub>m</sub> is the concentration of ADP at 50% of V<sub>max</sub>.\
+
+CAT kinetics were calculated using a similar equation:\
+
+$$JO_2 = I_{max} + \frac{C - I_{max}}{1 + \frac{IC_{50}}{[S]}}$$\
+
+where I<sub>max</sub> is the maximal inhibitiory effect of CAT and IC<sub>50</sub> is the concentration of CAT at 50% I<sub>max</sub>.\
+
+Thermodynamic coupling, a surrogate measure of P/O ratio, was calculated as follows:
+
+$$q = \sqrt{1-\frac{CAT_{5.0}}{FCCP_{Peak}}}$$\
+
+Last, CSC-induced inhibition of ANT was calculated as:\
+
+$$ANT~inhibition~(\%) = \frac{(GMDS_{Smoke} - CAT_{5.0_{Smoke}}) - (GMDS_{Control} - CAT_{5.0_{Control}})}{GMDS_{Control}}$$
+<br>
+<br>
+<br>
+<br>
+<br>
+
+## Row {.tabset data-height=650}
+
+### Overview
+
+```{r}
+aim2_methods <- image_read("data/Images/6 - copy of Aim 3.png")
+
+aim2_methods
+```
+
+
+### CSC State III Respiration
+
+```{r}
+ggplotly(mainplot_all + scale_x_discrete(labels = c('GM', 'GMD', 'GMDS', 'CAT', "FCCP", 'Rot'))) %>%
+   layout(font = list(family = "Arial", size = 4), yaxis = list(title = "<i>J</i><sub>O<sub>2</sub></sub> (pmol<sub>O<sub>2</sub></sub>/sec/mg<sub>wt</sub>)", linewidth = 2, tickwidth = 2, tickfont = list(family = "Arial Black", size = 12), titlefont = list(family = "Arial Black", size = 18)), 
+         xaxis = list(linewidth = 2, tickwidth = 2, tickfont = list(family = "Arial Black", size = 14), titlefont = list(family = "Arial Black", size = 16)), 
+          legend = list(title = list(text = "Tissue"), font = list(family = "Arial", size = 12))) %>%
+  add_lines(x = c(1.6, 1.9, 1.9, 1.6), y = c(72,72,72,72), showlegend = F, line = list(color = 'black'), legendgroup = 1, hoverinfo = 'none') %>%
+  add_text(x = 1.75, y = 75, text = "<b>p = 0.014</b>", showlegend = F, textfont = list(size = 12), hoverinfo = 'none') %>%
+  add_lines(x = c(2.1, 2.4, 2.4, 2.1), y = c(125,125,125,125), showlegend = F, line = list(color = 'black'), legendgroup = 1, hoverinfo = 'none') %>%
+  add_text(x = 2.25, y = 127, text = "<b>p = 0.038</b>", showlegend = F, textfont = list(size = 12), hoverinfo = 'none') %>%
+  add_lines(x = c(2.6, 2.9, 2.9, 2.6), y = c(75,75,75,75), showlegend = F, line = list(color = 'black'), legendgroup = 1, hoverinfo = 'none') %>%
+  add_text(x = 2.75, y = 77, text = "<b>p = 0.069</b>", showlegend = F, textfont = list(size = 12), hoverinfo = 'none') %>%
+  add_lines(x = c(3.1, 3.4, 3.4, 3.1), y = c(150,150,150,150), showlegend = F, line = list(color = 'black'), legendgroup = 1, hoverinfo = 'none') %>%
+  add_text(x = 3.25, y = 152, text = "<b>p = 0.041</b>", showlegend = F, textfont = list(size = 12), hoverinfo = 'none') %>%
+  add_lines(x = c(4.6, 4.9, 4.9, 4.6), y = c(93,93,93,93), showlegend = F, line = list(color = 'black'), legendgroup = 1, hoverinfo = 'none') %>%
+  add_text(x = 4.75, y = 95, text = "<b>p = 0.082</b>", showlegend = F, textfont = list(size = 12), hoverinfo = 'none') %>%
+  add_lines(x = c(5.1, 5.4, 5.4, 5.1), y = c(165,165,165,165), showlegend = F, line = list(color = 'black'), legendgroup = 1, hoverinfo = 'none') %>%
+  add_text(x = 5.25, y = 167, text = "<b>p = 0.139</b>", showlegend = F, textfont = list(size = 12), hoverinfo = 'none')
+```
+
+
+### Complex I is impaired in Gastroc
+
+```{r}
+ggplotly(cat_RotFCCP) %>%
+   layout(font = list(family = "Arial"), yaxis = list(title = "Contribution of Complex II (Rot/FCCP)", linewidth = 2, tickwidth = 2, tickfont = list(family = "Arial Black", size = 12), titlefont = list(family = "Arial Black", size = 18)), 
+         xaxis = list(linewidth = 2, tickwidth = 2, tickfont = list(family = "Arial Black", size = 14), titlefont = list(family = "Arial Black", size = 16)), 
+          legend = list(title = list(text = "Tissue"), font = list(family = "Arial", size = 12))) %>%
+  add_lines(x = c(1,2,2,1), y = c(0.88,0.88,0.88,0.88), showlegend = F, line = list(color = 'black'), legendgroup = 1, hoverinfo = 'none') %>%
+  add_text(x = 1.5, y = 0.9, text = "<b>p = 0.006</b>", showlegend = F, textfont = list(size = 12), hoverinfo = 'none')
+```
+
+
+### ANT, but not ATP Synthase, is Impaired by CSC
+
+```{r}
+ggplotly(cat_GMDSFCCP) %>%
+   layout(font = list(family = "Arial"), yaxis = list(title = "Phosphorylation Ratio (GMDS/FCCP)", linewidth = 2, tickwidth = 2, tickfont = list(family = "Arial Black", size = 12), titlefont = list(family = "Arial Black", size = 18)), 
+         xaxis = list(linewidth = 2, tickwidth = 2, tickfont = list(family = "Arial Black", size = 14), titlefont = list(family = "Arial Black", size = 16)), 
+          legend = list(title = list(text = "Tissue"), font = list(family = "Arial", size = 12)))
+```
+
+### Mitochondrial Quality is not Effected by CSC
+
+```{r}
+TC <- ggplotly(cat_Thermodynamic_Coupling) %>%
+   layout(font = list(family = "Arial"), yaxis = list(title = "q-value", linewidth = 2, tickwidth = 2, tickfont = list(family = "Arial Black", size = 12), titlefont = list(family = "Arial Black", size = 18)), 
+         xaxis = list(linewidth = 2, tickwidth = 2, tickfont = list(family = "Arial Black", size = 14), titlefont = list(family = "Arial Black", size = 16)), 
+          legend = list(title = list(text = "Tissue"), font = list(family = "Arial", size = 12))) %>%
+  add_lines(x = c(1,3,3,1), y = c(0.92,0.92,0.92,0.92), showlegend = F, line = list(color = 'black'), legendgroup = NA, hoverinfo = 'none') %>%
+  add_text(x = 2, y = 0.94, text = "<b>p = 0.042</b>", textfont = list(size = 12), showlegend = F, hoverinfo = 'none') %>%
+  add_lines(x = c(1,2,2,1), y = c(0.85,0.85,0.85,0.85), showlegend = F, line = list(color = 'black'), legendgroup = NA, hoverinfo = 'none') %>%
+  add_text(x = 1.5, y = 0.87, text = "<b>p < 0.001</b>", textfont = list(size = 12), showlegend = F, hoverinfo = 'none') %>%
+  add_lines(x = c(4,3,3,4), y = c(0.8,0.8,0.8,0.8), showlegend = F, line = list(color = 'black'), legendgroup = NA, hoverinfo = 'none') %>%
+  add_text(x = 3.5, y = 0.82, text = "<b>p = 0.046</b>", textfont = list(size = 12), showlegend = F, hoverinfo = 'none')
+
+RCR <- ggplotly(cat_RCR) %>%
+   layout(font = list(family = "Arial"), title = "", yaxis = list(title = "Respiratory Control Ratio (GMDS/GM)", linewidth = 2, tickwidth = 2, tickfont = list(family = "Arial Black", size = 12), titlefont = list(family = "Arial Black", size = 18)), 
+         xaxis = list(linewidth = 2, tickwidth = 2, tickfont = list(family = "Arial Black", size = 14), titlefont = list(family = "Arial Black", size = 16)), 
+          legend = list(title = list(text = "Tissue"), font = list(family = "Arial", size = 12)))
+
+subplot(RCR, TC, shareY = FALSE, titleY = TRUE, margin = 0.055) %>% layout(font = list(family = "Arial"), annotations = list(list(text = "<b>RCR</b>", x = 0.2,  
+    y = 1.075,  
+    xref = "paper",  
+    yref = "paper",  
+    xanchor = "center",  
+    yanchor = "bottom",  
+    showarrow = FALSE 
+  ), list(text = "<b>Thermodynamic Coupling</b>", x = 0.8,  
+    y = 1.075,  
+    xref = "paper",  
+    yref = "paper",  
+    xanchor = "center",  
+    yanchor = "bottom",  
+    showarrow = FALSE 
+  )), margin = 0.2)
+```
+
+
+### ETS is Equally Impaired, ANT is More Impacted in Gastroc
+
+```{r}
+fccpdiffs <- ggplotly(FCCP_diff) %>% 
+  layout(yaxis = list(title = "&#x394; FCCP<sub>Peak", linewidth = 2, tickwidth = 2, tickfont = list(family = "Arial Black", size = 12), titlefont = list(family = "Arial Black", size = 18)), 
+         xaxis = list(linewidth = 2, tickwidth = 2, tickfont = list(family = "Arial Black", size = 14), titlefont = list(family = "Arial Black", size = 16)), 
+          legend = list(title = list(text = "Tissue"), font = list(family = "Arial", size = 12)))
+
+catdiffs <- ggplotly(CAT_diff) %>% 
+  layout(yaxis = list(title = "CSC-Induced ANT Inhibition", linewidth = 2, tickwidth = 2, tickfont = list(family = "Arial Black", size = 12), titlefont = list(family = "Arial Black", size = 18)), 
+         xaxis = list(linewidth = 2, tickwidth = 2, tickfont = list(family = "Arial Black", size = 14), titlefont = list(family = "Arial Black", size = 16)), 
+          legend = list(title = list(text = "Tissue"), font = list(family = "Arial", size = 12))) %>%
+  add_lines(x = c(1,2,2,1), y = c(-.65,-.65,-.65,-.65), showlegend = F, line = list(color = 'black'), hoverinfo = 'none') %>%
+  add_text(x = 1.5, y = -.67, text = "<b>p = 0.009</b>", textfont = list(size = 12), showlegend = F, hoverinfo = 'none')
+
+subplot(fccpdiffs, catdiffs, shareY = FALSE, titleY = TRUE, margin = 0.055) %>% 
+  layout(font = list(family = "Arial"), annotations = list(list(text = "<b> &#x394; FCCP<sub>Peak</sub></b>", x = 0.2,  
+    y = 1.075,  
+    xref = "paper",  
+    yref = "paper",  
+    xanchor = "center",  
+    yanchor = "bottom",  
+    showarrow = FALSE 
+  ), list(text = "<b>CSC-Induced ANT Inhibitio</b>", x = 0.8,  
+    y = 1.075,  
+    xref = "paper",  
+    yref = "paper",  
+    xanchor = "center",  
+    yanchor = "bottom",  
+    showarrow = FALSE 
+  )), margin = 0.2)
+
+```
+
+
+### ADP Kinetics
+
+```{r}
+ggplotly(adp_kinetics)%>% 
+  layout(yaxis = list(title = "<i>J</i>O<sub>2</sub> (pmol<sub>O<sub>2</sub></sub>/sec/mg<sub>wt</sub>)", linewidth = 2, tickwidth = 2, tickfont = list(family = "Arial Black", size = 12), titlefont = list(family = "Arial Black", size = 18)), 
+         xaxis = list(title = '<b>[ADP] (&#x3BC;M)</b>', linewidth = 2, tickwidth = 2, tickfont = list(family = "Arial Black", size = 14), titlefont = list(family = "Arial Black", size = 16)), 
+          legend = list(title = list(text = "Tissue"), font = list(family = "Arial", size = 12)))
+```
+
+
+### CSC Effects ADP K<sub>m</sub> in Soleus, Lowers ADP V<sub>max</sub> in Both
+
+```{r}
+ADP_km <- ggplotly(adp_km) %>% 
+  layout(font = list(family = "Arial"), yaxis = list(title = "[ADP] (&#x3BC;M)", linewidth = 2, tickwidth = 2, tickfont = list(family = "Arial Black", size = 12), titlefont = list(family = "Arial Black", size = 18)), 
+         xaxis = list(linewidth = 2, tickwidth = 2, tickfont = list(family = "Arial Black", size = 14), titlefont = list(family = "Arial Black", size = 16)), 
+          legend = list(title = list(text = "Tissue"), font = list(family = "Arial", size = 12))) %>%
+  add_lines(x = c(1,3,3,1), y = c(670,670,670,670), showlegend = F, line = list(color = 'black'), hoverinfo = 'none') %>%
+  add_text(x = 2, y = 682, text = "<b>p = 0.001</b>", textfont = list(size = 12), showlegend = F, hoverinfo = 'none') %>%
+  add_lines(x = c(3,2,2,3), y = c(720,720,720,720), showlegend = F, line = list(color = 'black'), hoverinfo = 'none') %>%
+  add_text(x = 2.5, y = 732, text = "<b>p = 0.001</b>", textfont = list(size = 12), showlegend = F, hoverinfo = 'none') %>%
+  add_lines(x = c(3,4,4,3), y = c(770,770,770,770), showlegend = F, line = list(color = 'black'), hoverinfo = 'none') %>%
+  add_text(x = 3.5, y = 782, text = "<b>p = 0.042</b>", textfont = list(size = 12), showlegend = F, hoverinfo = 'none')
+
+ADP_vmax <- ggplotly(adp_vmax) %>% 
+  layout(font = list(family = "Arial"), yaxis = list(title = "<i>J</i>O<sub>2</sub> (pmol<sub>O<sub>2</sub></sub>/sec/mg<sub>wt</sub>)", linewidth = 2, tickwidth = 2, tickfont = list(family = "Arial Black", size = 12), titlefont = list(family = "Arial Black", size = 18)), 
+         xaxis = list(linewidth = 2, tickwidth = 2, tickfont = list(family = "Arial Black", size = 14), titlefont = list(family = "Arial Black", size = 16)), 
+          legend = list(title = list(text = "Tissue"), font = list(family = "Arial", size = 12))) %>%
+  add_lines(x = c(1,3,3,1), y = c(118,118,118,118), showlegend = F, line = list(color = 'black'), hoverinfo = 'none') %>%
+  add_text(x = 2, y = 121, text = "<b>p = 0.053</b>", textfont = list(size = 12), showlegend = F, hoverinfo = 'none') %>%
+  add_lines(x = c(1,2,2,1), y = c(70,70,70,70), showlegend = F, line = list(color = 'black'), hoverinfo = 'none') %>%
+  add_text(x = 1.5, y = 73, text = "<b>p = 0.009</b>", textfont = list(size = 12), showlegend = F, hoverinfo = 'none') %>%
+  add_lines(x = c(4,3,3,4), y = c(145,145,145,145), showlegend = F, line = list(color = 'black'), hoverinfo = 'none') %>%
+  add_text(x = 3.5, y = 148, text = "<b>p = 0.008</b>", textfont = list(size = 12), showlegend = F, hoverinfo = 'none') %>%
+  add_lines(x = c(2,4,4,2), y = c(130,130,130,130), showlegend = F, line = list(color = 'black'), hoverinfo = 'none') %>%
+  add_text(x = 3, y = 133, text = "<b>p = 0.036</b>", textfont = list(size = 12), showlegend = F, hoverinfo = 'none')
+
+subplot(ADP_km, ADP_vmax, shareY = FALSE, titleY = TRUE, margin = 0.055) %>% layout(font = list(family = "Arial"), annotations = list(list(text = "<b>ADP K<sub>m</sub></b>", x = 0.2,  
+    y = 1.075,  
+    xref = "paper",  
+    yref = "paper",  
+    xanchor = "center",  
+    yanchor = "bottom",  
+    showarrow = FALSE 
+  ), list(text = "<b>ADP V<sub>max</sub></b>", x = 0.8,  
+    y = 1.075,  
+    xref = "paper",  
+    yref = "paper",  
+    xanchor = "center",  
+    yanchor = "bottom",  
+    showarrow = FALSE 
+  )), margin = 0.2)
+```
+
+
+### CAT Kinetics
+
+```{r}
+ggplotly(cat_kinetics) %>% 
+  layout(yaxis = list(title = "<i>J</i>O<sub>2</sub> (pmol<sub>O<sub>2</sub></sub>/sec/mg<sub>wt</sub>)", linewidth = 2, tickwidth = 2, tickfont = list(family = "Arial Black", size = 12), titlefont = list(family = "Arial Black", size = 18)), 
+         xaxis = list(title = '<b>[CAT] &#x3BC;M</b>', linewidth = 2, tickwidth = 2, tickfont = list(family = "Arial Black", size = 14), titlefont = list(family = "Arial Black", size = 16)), 
+          legend = list(title = list(text = "Tissue"), font = list(family = "Arial", size = 12)))
+```
+
+### CAT Impairs ANT More in Controls
+
+```{r}
+CAT_imax <- ggplotly(cat_imax) %>% 
+  layout(font = list(family = "Arial"), yaxis = list(title = "<i>J</i>O<sub>2</sub> (pmol<sub>O<sub>2</sub></sub>/sec/mg<sub>wt</sub>)", linewidth = 2, tickwidth = 2, tickfont = list(family = "Arial Black", size = 12), titlefont = list(family = "Arial Black", size = 18)), 
+         xaxis = list(linewidth = 2, tickwidth = 2, tickfont = list(family = "Arial Black", size = 14), titlefont = list(family = "Arial Black", size = 16)), 
+          legend = list(title = list(text = "Tissue"), font = list(family = "Arial", size = 12)))
+
+CAT_vmax <- ggplotly(cat_vmax) %>% 
+  layout(font = list(family = "Arial"), yaxis = list(title = "<i>J</i>O<sub>2</sub> (pmol<sub>O<sub>2</sub></sub>/sec/mg<sub>wt</sub>)", linewidth = 2, tickwidth = 2, tickfont = list(family = "Arial Black", size = 12), titlefont = list(family = "Arial Black", size = 18)), 
+         xaxis = list(linewidth = 2, tickwidth = 2, tickfont = list(family = "Arial Black", size = 14), titlefont = list(family = "Arial Black", size = 16)), 
+          legend = list(title = list(text = "Tissue"), font = list(family = "Arial", size = 12)))
+
+CAT_km <- ggplotly(cat_km) %>% 
+  layout(font = list(family = "Arial"), yaxis = list(title = "[CAT] (&#x3BC;M)", linewidth = 2, tickwidth = 2, tickfont = list(family = "Arial Black", size = 12), titlefont = list(family = "Arial Black", size = 18)), 
+         xaxis = list(linewidth = 2, tickwidth = 2, tickfont = list(family = "Arial Black", size = 14), titlefont = list(family = "Arial Black", size = 16)), 
+          legend = list(title = list(text = "Tissue"), font = list(family = "Arial", size = 12)))
+
+CAT_percent <- ggplotly(cat_percent) %>% 
+  layout(font = list(family = "Arial"), yaxis = list(title = "Inhibition (% V<sub>max</sub>)", linewidth = 2, tickwidth = 2, tickfont = list(family = "Arial Black", size = 12), titlefont = list(family = "Arial Black", size = 18)), 
+         xaxis = list(side = "top", linewidth = 2, tickwidth = 2, tickfont = list(family = "Arial Black", size = 14), titlefont = list(family = "Arial Black", size = 16)), 
+          legend = list(title = list(text = "Tissue"), font = list(family = "Arial", size = 12))) %>%
+  add_lines(x = c(1,2,2,1), y = c(-1,-1,-1,-1), showlegend = F, line = list(color = 'black'), hoverinfo = 'none') %>%
+  add_text(x = 1.5, y = -1.03, text = "<b>p = 0.001</b>", textfont = list(size = 12), showlegend = F, hoverinfo = 'none') %>%
+  add_lines(x = c(4,3,3,4), y = c(-.82,-.82,-.82,-.82), showlegend = F, line = list(color = 'black'), hoverinfo = 'none') %>%
+  add_text(x = 3.5, y = -.85, text = "<b>p = 0.077</b>", textfont = list(size = 12), showlegend = F, hoverinfo = 'none')
+
+subplot(CAT_vmax, CAT_km, CAT_imax, CAT_percent, shareY = FALSE, titleY = TRUE, margin = 0.055) %>% layout(font = list(family = "Arial"), annotations = list(
+  list(text = "<b>CAT Initial Rate (C)</b>", x = 0.13,  
+    y = 1.075,  
+    xref = "paper",  
+    yref = "paper",  
+    xanchor = "center",  
+    yanchor = "bottom",  
+    showarrow = FALSE 
+  ), list(text = "<b>CAT IC<sub>50</sub></b>", x = 0.4,  
+    y = 1.075,  
+    xref = "paper",  
+    yref = "paper",  
+    xanchor = "center",  
+    yanchor = "bottom",  
+    showarrow = FALSE 
+  ), list(text = "<b>CAT I<sub>max</sub></b>", x = 0.65,  
+    y = 1.075,  
+    xref = "paper",  
+    yref = "paper",  
+    xanchor = "center",  
+    yanchor = "bottom",  
+    showarrow = FALSE 
+  ), list(text = "<b>Percent Inhibition</b>", x = 0.88,  
+    y = 1.075,  
+    xref = "paper",  
+    yref = "paper",  
+    xanchor = "center",  
+    yanchor = "bottom",  
+    showarrow = FALSE 
+  )), margin = 0.2)
+
+```
+
+## Row
+
+### **Conclusions**
+
+&emsp; In conclusion, the present study comprehensively examined the effects of cigarette smoke on mitochondrial energy transfer involving the electron transport chain, ADP transport into the mitochondria, and respiratory control by ADP in skeletal muscles with different metabolic characteristics. Acute cigarette smoke exposure significantly inhibited maximal ADP-stimulated respiration in the skeletal muscle. Interestingly, the site of CSC-induced inhibition of mitochondrial respiration appeared to be tissue-dependent. Specifically, the fast-twitch gastrocnemius muscle exhibited a greater decrease of Complex-I-specific respiration than the slow-twitch soleus. CSC also elicited a tissue-dependent effect on respiratory control as mitochondrial respiration sensitivity for ADP was significantly increased in the soleus but not the gastrocnemius.
+<br>
+&emsp; Furthermore, we provide evidence to suggest that cigarette smoke also directly impairs mitochondrial thermodynamic efficiency and the exchange of ADP/ATP by inhibiting ANT in the inner mitochondrial membrane. Unlike previous studies using *in vitro* preparation which can affect mitochondrial morphology and function, mitochondrial proton leak in slow- and fast-twitch skeletal muscle fibers was not significantly affected by cigarette smoke when assessed *in situ* in permeabilized fibers. Our findings shed light on the mechanisms of energy transfer that mediate the cigarette smoke-induced impairment of mitochondrial production of ATP in the skeletal muscle, leading to bioenergetic deficiencies and ultimately contributing to poor exercise tolerance commonly observed in humans chronically exposed to cigarette smoke.
+
+
+
+## Row
+
+### **Summary Diagram**
+
+```{r}
+aim2_outline
+```
+
+# `r fontawesome::fa("explosion")` ROS Production {#Sup2}
+
+```{r include=FALSE, echo=FALSE}
+source("data/New_H2O2.R")
+```
+
+
+## Column {.sidebar data-width="300"}
+
+<br>
+
+### H<sub>2</sub>O<sub>2</sub> Protocol Overview
+
+**Primary Aim:** Determine how CSC influences mitochondria-derived hydrogen peroxide production.
+
+**Methods**: Permeablized gastrocnemius and soleus muscle bundles were prepared as outlined in the [Methods section](#Methods). Oxygen Background calibration was performed according to Oroboros guidelines.
+<br>
+H<sub>2</sub>O<sub>2</sub> is measured by using Amplex UltraRed, an extrinsic fluorophore measurement, as outlined on the [Oroboros Website](https://wiki.oroboros.at/index.php/Amplex_UltraRed). H<sub>2</sub>O<sub>2</sub> and Amplex UltraRed are catalyzed by Horseradish Peroxidase to produce resorufin (excitation wavelength 563 nm, emission 587 nm). In these experiments, we used the fluorescent probes purchased from Oroboros Instruments.  
+<br>
+Final concentrations of the following were used for the detection of H<sub>2</sub>O<sub>2</sub>:
+*   Amplex UltraRed - 10 &mu;M
+*   Horseradish Peroxidase - 1 U/mL
+*   Superoxide Dismutase - 5 U/mL
+
+<br>
+H<sub>2</sub>O<sub>2</sub> background calibration using 40 &mu;M H<sub>2</sub>O<sub>2</sub> was performed according to Oroboros Instruments. Samples were then weighed and then added to the O2K chambers with MiR-05.
+
+The protocol for this aim is as follows:
+
+*   Glutamate (10 mM) & Malate (2 mM)\
+*   Succinate (10 mM)
+*   ADP titrations
+ <ul class="roman">
+ <li>25 &mu;M</li>
+ <li>50 &mu;M</li>
+ <li>100 &mu;M</li>
+ <li>250 &mu;M</li>
+ <li>5000 &mu;M</li>
+</ul>
+*   Cytochrome C\
+
+
+&emsp; Oxygen was maintained at 190-250 &mu;M for all other tissues. Samples with >10% increase in respiration with the addition of cytochrome C were removed from analysis. Respiration rates were normalized to wet weight.\
+&emsp; ADP kinetics were fitted to a modified Michaelis-Menten equation, as follows:\
+
+$$JO_2 = C + \frac{V_{max} - C}{1 + \frac{K_m}{[S]}}$$\
+
+where <i>J</i>O<sub>2</sub> is the respiration rate, [S] is the concentration of ADP, C is the respiration rate at [S] = 0, V<sub>max</sub> is the upper limit of <i>J</i>O<sub>2</sub>, and K<sub>m</sub> is the concentration of ADP at 50% of V<sub>max</sub>.\
+
+H<sub>2</sub>O<sub>2</sub> kinetics were calculated using a similar equation:\
+
+$$JO_2 = I_{max} + \frac{C - I_{max}}{1 + \frac{IC_{50}}{[S]}}$$\
+
+where I<sub>max</sub> is the maximal inhibitory effect of CAT and IC<sub>50</sub> is the concentration of CAT at 50% I<sub>max</sub>.\
+
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+
+## Row {.tabset data-height=650}
+
+### Overview
+
+```{r}
+h2o2_image <- image_read("data/Images/H2O2 Main.png")
+
+h2o2_image
+```
+
+
+### Absolute H<sub>2</sub>O<sub>2</sub> Kinetics
+
+```{r}
+ggplotly(h2o2_kinetics) %>%
+   layout(yaxis = list(title = "<i>J</i>H<sub>2</sub>O<sub>2</sub> (pmol<sub>H<sub>2</sub>O<sub>2</sub></sub>/mg<sub>wt</sub>/sec)", linewidth = 2, tickwidth = 2, tickfont = list(family = "Arial Black", size = 12), titlefont = list(family = "Arial Black", size = 18)), 
+         xaxis = list(title = "[ADP] (&mu;M)", linewidth = 2, tickwidth = 2, tickfont = list(family = "Arial Black", size = 14), titlefont = list(family = "Arial Black", size = 16)), 
+          legend = list(title = list(text = "Tissue"), font = list(family = "Arial", size = 12)))
+```
+
+
+### No effect of CSC on Absolute H<sub>2</sub>O<sub>2</sub> Production
+
+```{r}
+ggplotly(mainplot_h2o2) %>%
+   layout(yaxis = list(title = "<i>J</i>H<sub>2</sub>O<sub>2</sub> (pmol<sub>H<sub>2</sub>O<sub>2</sub></sub>/mg<sub>wt</sub>/sec)", linewidth = 2, tickwidth = 2, tickfont = list(family = "Arial Black", size = 12), titlefont = list(family = "Arial Black", size = 18)), 
+         xaxis = list(linewidth = 2, tickwidth = 2, tickfont = list(family = "Arial Black", size = 14), titlefont = list(family = "Arial Black", size = 16)), 
+          legend = list(title = list(text = "Tissue"), font = list(family = "Arial", size = 12)))
+```
+
+
+### Cigarette Smoke Decreases K<sub>m</sub> of ADP-Driven Decrease in H<sub>2</sub>O<sub>2</sub> Production
+
+```{r}
+H2o2_IMAX <- ggplotly(h2o2_imax) %>% 
+  layout(yaxis = list(title = "<i>J</i>H<sub>2</sub>O<sub>2</sub> (pmol<sub>H<sub>2</sub>O<sub>2</sub></sub>/mg<sub>wt</sub>/sec)", linewidth = 2, tickwidth = 2, tickfont = list(family = "Arial Black", size = 12), titlefont = list(family = "Arial Black", size = 18)), 
+         xaxis = list(linewidth = 2, tickwidth = 2, tickfont = list(family = "Arial Black", size = 14), titlefont = list(family = "Arial Black", size = 16)), 
+          legend = list(title = list(text = "Tissue"), font = list(family = "Arial", size = 12)))
+
+h2o2_VMAX <- ggplotly(h2o2_vmax) %>% 
+  layout(yaxis = list(title = "<i>J</i>H<sub>2</sub>O<sub>2</sub> (pmol<sub>H<sub>2</sub>O<sub>2</sub></sub>/mg<sub>wt</sub>/sec)", linewidth = 2, tickwidth = 2, tickfont = list(family = "Arial Black", size = 12), titlefont = list(family = "Arial Black", size = 18)), 
+         xaxis = list(linewidth = 2, tickwidth = 2, tickfont = list(family = "Arial Black", size = 14), titlefont = list(family = "Arial Black", size = 16)), 
+          legend = list(title = list(text = "Tissue"), font = list(family = "Arial", size = 12)))
+
+h2o2_KM <- ggplotly(h2o2_km) %>% 
+  layout(yaxis = list(title = "[ADP] (&#x3BC;M)", linewidth = 2, tickwidth = 2, tickfont = list(family = "Arial Black", size = 12), titlefont = list(family = "Arial Black", size = 18)), 
+         xaxis = list(linewidth = 2, tickwidth = 2, tickfont = list(family = "Arial Black", size = 14), titlefont = list(family = "Arial Black", size = 16)), 
+          legend = list(title = list(text = "Tissue"), font = list(family = "Arial", size = 12)))
+
+h2o2_PERCENT <- ggplotly(h2o2_percent) %>% 
+  layout(yaxis = list(title = "Inhibition (% V<sub>max</sub>", linewidth = 2, tickwidth = 2, tickfont = list(family = "Arial Black", size = 12), titlefont = list(family = "Arial Black", size = 18)), 
+         xaxis = list(side = "top", linewidth = 2, tickwidth = 2, tickfont = list(family = "Arial Black", size = 14), titlefont = list(family = "Arial Black", size = 16)), 
+          legend = list(title = list(text = "Tissue"), font = list(family = "Arial", size = 12)))
+
+subplot(h2o2_VMAX, h2o2_KM, H2o2_IMAX, h2o2_PERCENT, shareY = FALSE, titleY = TRUE, margin = 0.055) %>% layout(font = list(family = "Arial Black"), annotations = list(
+  list(text = "H<sub>2</sub>O<sub>2</sub> Initial Rate (C)", x = 0.13,  
+    y = 1.075,  
+    xref = "paper",  
+    yref = "paper",  
+    xanchor = "center",  
+    yanchor = "bottom",  
+    showarrow = FALSE 
+  ), list(text = "H<sub>2</sub>O<sub>2</sub> IC<sub>50</sub>", x = 0.4,  
+    y = 1.075,  
+    xref = "paper",  
+    yref = "paper",  
+    xanchor = "center",  
+    yanchor = "bottom",  
+    showarrow = FALSE 
+  ), list(text = "H<sub>2</sub>O<sub>2</sub> I<sub>max</sub>", x = 0.65,  
+    y = 1.075,  
+    xref = "paper",  
+    yref = "paper",  
+    xanchor = "center",  
+    yanchor = "bottom",  
+    showarrow = FALSE 
+  ), list(text = "Percent Inhibition", x = 0.88,  
+    y = 1.075,  
+    xref = "paper",  
+    yref = "paper",  
+    xanchor = "center",  
+    yanchor = "bottom",  
+    showarrow = FALSE 
+  )), margin = 0.2)
+```
+
+
+### H<sub>2</sub>O<sub>2</sub> Kinetics Relative to State II
+
+```{r}
+ggplotly(percent_kinetics) %>%
+   layout(yaxis = list(title = "<i>J</i>H<sub>2</sub>O<sub>2</sub> (% of GMS)", linewidth = 2, tickwidth = 2, tickfont = list(family = "Arial Black", size = 12), titlefont = list(family = "Arial Black", size = 18)), 
+         xaxis = list(title = "[ADP] (&mu;M)", linewidth = 2, tickwidth = 2, tickfont = list(family = "Arial Black", size = 14), titlefont = list(family = "Arial Black", size = 16)), 
+          legend = list(title = list(text = "Tissue"), font = list(family = "Arial", size = 12)))
+```
+
+### CSC Increases Relative H<sub>2</sub>O<sub>2</sub> Production at Saturating ADP
+
+```{r}
+ggplotly(mainplot_percent) %>%
+   layout(yaxis = list(title = "<i>J</i>H<sub>2</sub>O<sub>2</sub> (% of GMS)", linewidth = 2, tickwidth = 2, tickfont = list(family = "Arial Black", size = 12), titlefont = list(family = "Arial Black", size = 18)), 
+         xaxis = list(linewidth = 2, tickwidth = 2, tickfont = list(family = "Arial Black", size = 14), titlefont = list(family = "Arial Black", size = 16)), 
+          legend = list(title = list(text = "Tissue"), font = list(family = "Arial", size = 12)))
+```
+
+### CSC Increases Relative H<sub>2</sub>O<sub>2</sub> I<sub>max</sub>
+
+```{r}
+h2o2_KM <- ggplotly(h2o2_km) %>% 
+  layout(yaxis = list(title = "[ADP] (&#x3BC;M)", linewidth = 2, tickwidth = 2, tickfont = list(family = "Arial Black", size = 12), titlefont = list(family = "Arial Black", size = 18)), 
+         xaxis = list(linewidth = 2, tickwidth = 2, tickfont = list(family = "Arial Black", size = 14), titlefont = list(family = "Arial Black", size = 16)), 
+          legend = list(title = list(text = "Tissue"), font = list(family = "Arial", size = 12)))
+
+h2o2_PERCENT <- ggplotly(h2o2_percent) %>% 
+  layout(yaxis = list(title = "Inhibition (% Initial)", linewidth = 2, tickwidth = 2, tickfont = list(family = "Arial Black", size = 12), titlefont = list(family = "Arial Black", size = 18)), 
+         xaxis = list(side = "top", linewidth = 2, tickwidth = 2, tickfont = list(family = "Arial Black", size = 14), titlefont = list(family = "Arial Black", size = 16)), 
+          legend = list(title = list(text = "Tissue"), font = list(family = "Arial", size = 12)))
+
+subplot(h2o2_KM, h2o2_PERCENT, shareY = FALSE, titleY = TRUE, margin = 0.055) %>% layout(font = list(family = "Arial Black"), annotations = list(
+  list(text = "K<sub>m</sub>", x = 0.13,  
+    y = 1.075,  
+    xref = "paper",  
+    yref = "paper",  
+    xanchor = "center",  
+    yanchor = "bottom",  
+    showarrow = FALSE 
+  ), list(text = "Percent Inhibition", x = 0.88,  
+    y = 1.075,  
+    xref = "paper",  
+    yref = "paper",  
+    xanchor = "center",  
+    yanchor = "bottom",  
+    showarrow = FALSE 
+  )), margin = 0.15)
+```
+
+
+### H<sub>2</sub>O<sub>2</sub> Kinetics Normalized to O<sub>2</sub>
+
+```{r}
+ggplotly(plot_h2o2_per_kinetics) %>%
+   layout(yaxis = list(title = "Mitochondrial Efficiency (pmol<sub>H<sub>2</sub>O<sub>2</sub></sub>/pmol<sub>O<sub>2</sub></sub>)", linewidth = 2, tickwidth = 2, tickfont = list(family = "Arial Black", size = 12), titlefont = list(family = "Arial Black", size = 18)), 
+         xaxis = list(title = "[ADP] (&mu;M)", linewidth = 2, tickwidth = 2, tickfont = list(family = "Arial Black", size = 14), titlefont = list(family = "Arial Black", size = 16)), 
+          legend = list(title = list(text = "Tissue"), font = list(family = "Arial", size = 12)))
+```
+
+### CSC Increases H<sub>2</sub>O<sub>2</sub> Production Normalized for O<sub>2</sub> Flux
+
+```{r}
+ggplotly(mainplot_per) %>%
+   layout(yaxis = list(title = "Mitochondrial Efficiency (pmol<sub>H<sub>2</sub>O<sub>2</sub></sub>/pmol<sub>O<sub>2</sub></sub>)", linewidth = 2, tickwidth = 2, tickfont = list(family = "Arial Black", size = 12), titlefont = list(family = "Arial Black", size = 18)), 
+         xaxis = list(linewidth = 2, tickwidth = 2, tickfont = list(family = "Arial Black", size = 14), titlefont = list(family = "Arial Black", size = 16)), 
+          legend = list(title = list(text = "Tissue"), font = list(family = "Arial", size = 12)))
+```
+
+### CSC Increases I<sub>max</sub> of H<sub>2</sub>O<sub>2</sub> Normalized to O<sub>2</sub>
+
+```{r}
+H2o2_per_IMAX <- ggplotly(h2o2_per_imax) %>% 
+  layout(yaxis = list(title = "Mitochondrial Efficiency (pmol<sub>H<sub>2</sub>O<sub>2</sub></sub>/pmol<sub>O<sub>2</sub></sub>)", linewidth = 2, tickwidth = 2, tickfont = list(family = "Arial Black", size = 12), titlefont = list(family = "Arial Black", size = 18)), 
+         xaxis = list(linewidth = 2, tickwidth = 2, tickfont = list(family = "Arial Black", size = 14), titlefont = list(family = "Arial Black", size = 16)), 
+          legend = list(title = list(text = "Tissue"), font = list(family = "Arial", size = 12)))
+
+h2o2_per_VMAX <- ggplotly(h2o2_per_vmax) %>% 
+  layout(yaxis = list(title = "Mitochondrial Efficiency (pmol<sub>H<sub>2</sub>O<sub>2</sub></sub>/pmol<sub>O<sub>2</sub></sub>)", linewidth = 2, tickwidth = 2, tickfont = list(family = "Arial Black", size = 12), titlefont = list(family = "Arial Black", size = 18)), 
+         xaxis = list(linewidth = 2, tickwidth = 2, tickfont = list(family = "Arial Black", size = 14), titlefont = list(family = "Arial Black", size = 16)), 
+          legend = list(title = list(text = "Tissue"), font = list(family = "Arial", size = 12)))
+
+h2o2_per_KM <- ggplotly(h2o2_per_km) %>% 
+  layout(yaxis = list(title = "[ADP] (&#x3BC;M)", linewidth = 2, tickwidth = 2, tickfont = list(family = "Arial Black", size = 12), titlefont = list(family = "Arial Black", size = 18)), 
+         xaxis = list(linewidth = 2, tickwidth = 2, tickfont = list(family = "Arial Black", size = 14), titlefont = list(family = "Arial Black", size = 16)), 
+          legend = list(title = list(text = "Tissue"), font = list(family = "Arial", size = 12)))
+
+h2o2_per_PERCENT <- ggplotly(h2o2_per_inhibition) %>% 
+  layout(yaxis = list(title = "Inhibition (% V<sub>max</sub>)", linewidth = 2, tickwidth = 2, tickfont = list(family = "Arial Black", size = 12), titlefont = list(family = "Arial Black", size = 18)), 
+         xaxis = list(side = "top", linewidth = 2, tickwidth = 2, tickfont = list(family = "Arial Black", size = 14), titlefont = list(family = "Arial Black", size = 16)), 
+          legend = list(title = list(text = "Tissue"), font = list(family = "Arial", size = 12)))
+
+subplot(h2o2_per_VMAX, h2o2_per_KM, H2o2_per_IMAX, h2o2_per_PERCENT, shareY = FALSE, titleY = TRUE, margin = 0.055) %>% layout(font = "Arial Black", annotations = list(
+  list(text = "Initial Rate (C)",
+    x = 0.13,  
+    y = 1.075,  
+    xref = "paper",  
+    yref = "paper",  
+    xanchor = "center",  
+    yanchor = "bottom",  
+    showarrow = FALSE 
+  ), list(text = "IC<sub>50</sub>", x = 0.4,  
+    y = 1.075,  
+    xref = "paper",  
+    yref = "paper",  
+    xanchor = "center",  
+    yanchor = "bottom",  
+    showarrow = FALSE 
+  ), list(text = "I<sub>max</sub>", x = 0.65,  
+    y = 1.075,  
+    xref = "paper",  
+    yref = "paper",  
+    xanchor = "center",  
+    yanchor = "bottom",  
+    showarrow = FALSE 
+  ), list(text = "Percent Inhibition", x = 0.88,  
+    y = 1.075,  
+    xref = "paper",  
+    yref = "paper",  
+    xanchor = "center",  
+    yanchor = "bottom",  
+    showarrow = FALSE 
+  )), margin = 0.2)
+```
+
+## Row
+
+### **Conclusions**
+
+Study is still in progress. I will update this as soon as I can.
+
+## Row
+
+### **Summary Diagram**
+
+Study is still in progress. I will update this as soon as I can.
+
+
+# `r fontawesome::fa("fire")` Substrate Utilization {#Aim3}
+
+```{r include=FALSE}
+source("data/aim2_final.R")
+```
+
+
+## Column {.sidebar data-width="300"}
+
+<br>
+
+### Aim 3 Overview
+
+**Primary Aim:** Examine the molecular targets and mechanisms by which CSC inhibits mitochondrial respiration in permeabilized skeletal muscle fiber bundles.
+
+**Methods**: Permeablized gastrocnemius and soleus muscle bundles were prepared as outlined in the [Methods section](#Methods). Samples were weighed and then added to the O2K chambers with MiR-05.
+
+Two different protocols were used for this aim. Protocol 1, which was used to assess pyruvate-stimulated respiration, was performed as follows:
+
+*   Malate (2 mM) & ADP (5 mM)\
+*   Pyruvate titrations
+ <ul class="roman">
+ <li>0.1 mM</li>
+ <li>0.25 mM</li>
+ <li>0.5 mM</li>
+ <li>1.0 mM</li>
+ <li>5.0 mM</li>
+</ul>
+*   Cytochrome C (10 &mu;M)\
+*   Antimycin A (2.5 &mu;M) & Oligomycin (5 nM)\
+
+The second protocol was used to assess palmitoylcarnitine (PC)-stimulated respirationas well as the interaction between pyruvate and PC, and was performed as follows:
+
+*   Malate (2 mM) & ADP (5 mM)\
+*   PC titrations
+ <ul class="roman">
+ <li>0.0025 mM</li>
+ <li>0.005 mM</li>
+ <li>0.0125 mM</li>
+ <li>0.025 mM</li>
+ <li>0.04 mM</li>
+</ul>
+*   Pyruvate titrations
+ <ul class="roman">
+ <li>0.1 mM</li>
+ <li>0.25 mM</li>
+ <li>0.5 mM</li>
+ <li>1.0 mM</li>
+ <li>5.0 mM</li>
+</ul>
+*   Cytochrome C (10 &mu;M)\
+*   Antimycin A (2.5 &mu;M) & Oligomycin (5 nM)\
+
+
+&emsp; Oxygen was maintained at 190-250 &mu;M for all other tissues. Samples with >10% increase in respiration with the addition of cytochrome C were removed from analysis. Respiration rates were normalized to wet weight.\
+&emsp; Pyruvate and PC kinetics were fitted to a modified Michaelis-Menten equation, as follows:\
+
+$$JO_2 = C + \frac{V_{max} - C}{1 + \frac{K_m}{[S]}}$$\
+
+<br>
+<br>
+<br>
+
+## Row {.tabset data-height=650}
+
+### Overview
+
+```{r}
+aim3_outline
+```
+
+
+### Pyruvate Kinetics
+
+```{r}
+pyruvate_mm <- rbind(Gast_pyr_mm, Sol_pyr_mm)
+pyruvate_mm$Tissue[pyruvate_mm$Tissue == "Gastroc"] <- "Gastrocnemius"
+pyruvate_mm$Condition <- paste(pyruvate_mm$Tissue, pyruvate_mm$Smoke)
+
+Gast_pyr_predicted$Tissue <- "Gastrocnemius"
+Sol_pyr_predicted$Tissue <- "Soleus"
+
+pyruvate_predicted <- rbind(Gast_pyr_predicted, Sol_pyr_predicted)
+pyruvate_predicted$Condition <- paste(pyruvate_predicted$Tissue, pyruvate_predicted$Smoke)
+
+pyruvate_errors <- rbind(Gast_pyr_errors, Sol_pyr_errors)
+pyruvate_errors$Tissue[pyruvate_errors$Tissue == "Gastroc"] <- "Gastrocnemius"
+pyruvate_errors$Condition <- paste(pyruvate_errors$Tissue, pyruvate_errors$Smoke)
+
+pyruvate_kinetics <- ggplot(data = pyruvate_mm, aes(x = Concentration, y = Rate, color = Condition)) +
+  stat_summary(geom = "errorbar", fun.data = "mean_se", size = 1, width = 0.1) +
+  geom_line(data = pyruvate_predicted, aes(x = S, y = v, linetype = Condition), size = 1.5, stat = "summary", fun.y = "mean_se()") +
+  # geom_errorbar(data = pyruvate_errors, aes(x = Concentration, y = Rate_mean, color = Condition, ymin = min, ymax = max), inherit.aes = F, size = 1, width = .1) +
+  geom_point(stat = "summary", fun.y = "mean", size = 3, pch = 21) +
+  theme_prism() +
+  coord_cartesian(ylim = c(0, 70), xlim = c(-.1, 5.1), expand = FALSE) +
+  scale_y_continuous(expand = c(0,0), breaks = seq(0, 70, 10)) +
+  labs(x = expression(bold(paste("[Pyruvate] (", mu, "M)"))), y = expression(bold(bolditalic(J)*O['2']~(pmol[O['2']]/sec/mg[wt])))) +
+  scale_linetype_manual(breaks = c("Gastrocnemius Control", "Gastrocnemius Smoke","Soleus Control", "Soleus Smoke"), values = c(1,3,1,3)) +
+  scale_color_manual(breaks = c("Gastrocnemius Control", "Gastrocnemius Smoke","Soleus Control", "Soleus Smoke"), values = c("blue", "darkblue", "red", "darkred"))
+
+ggplotly(pyruvate_kinetics) %>% 
+  layout(yaxis = list(title = "<i>J</i>O<sub>2</sub> (pmol<sub>O<sub>2</sub></sub>/sec/mg<sub>wt</sub>)", linewidth = 2, tickwidth = 2, tickfont = list(family = "Times New Roman Black")), xaxis = list(title = '<b>[Pyruvate] (&#x3BC;M)</b>',linewidth = 2, tickwidth = 2, tickfont = list(family = "Times New Roman Black", size = 14)))
+```
+
+
+### CSC Impairs Pyruvate Metabolism
+
+```{r}
+PYRUVATE_km <- ggplotly(pyruvate_km) %>%
+   layout(yaxis = list(title = "[Puruvate] (mM)", linewidth = 2, tickwidth = 2, tickfont = list(family = "Times New Roman Black")), xaxis = list(linewidth = 2, tickwidth = 2, tickfont = list(family = "Times New Roman Black", size = 14)))
+
+PYRUVATE_vmax <- ggplotly(pyruvate_vmax) %>%
+   layout(yaxis = list(title = "<i>J</i>O<sub>2</sub> (pmol<sub>O<sub>2</sub></sub>/sec/mg<sub>wt</sub>)", linewidth = 2, tickwidth = 2, tickfont = list(family = "Times New Roman Black")), xaxis = list(linewidth = 2, tickwidth = 2, tickfont = list(family = "Times New Roman Black", size = 14)))
+
+subplot(PYRUVATE_km, PYRUVATE_vmax, shareY = FALSE, titleY = TRUE) %>% layout(annotations = list(list(text = "K<sub>m</sub>", x = 0.2,  
+    y = 1.075,  
+    xref = "paper",  
+    yref = "paper",  
+    xanchor = "center",  
+    yanchor = "bottom",  
+    showarrow = FALSE 
+  ), list(text = "V<sub>max</sub>", x = 0.8,  
+    y = 1.075,  
+    xref = "paper",  
+    yref = "paper",  
+    xanchor = "center",  
+    yanchor = "bottom",  
+    showarrow = FALSE 
+  )), margin = 0)
+```
+
+
+### Palmitoylcarnitine Kinetics
+
+```{r}
+palm_mm <- rbind(Gast_palm_mm, Sol_palm_mm)
+palm_mm$Tissue[palm_mm$Tissue == "Gastroc"] <- "Gastrocnemius"
+palm_mm$Condition <- paste(palm_mm$Tissue, palm_mm$Smoke)
+
+Gast_palm_predicted$Tissue <- "Gastrocnemius"
+Sol_palm_predicted$Tissue <- "Soleus"
+
+palm_predicted <- rbind(Gast_palm_predicted, Sol_palm_predicted)
+palm_predicted$Condition <- paste(palm_predicted$Tissue, palm_predicted$Smoke)
+
+palm_errors <- rbind(Gast_palm_errors, Sol_palm_errors)
+palm_errors$Tissue[palm_errors$Tissue == "Gastroc"] <- "Gastrocnemius"
+palm_errors$Condition <- paste(palm_errors$Tissue, palm_errors$Smoke)
+
+palm_kinetics <- ggplot(data = palm_mm, aes(x = Concentration, y = Rate, color = Condition)) +
+  stat_summary(geom = "errorbar", fun.data = "mean_se", size = 1, width = 0.0001) +
+  geom_line(data = palm_predicted, aes(x = S, y = v, linetype = Condition), size = 1.5, stat = "summary", fun.y = "mean_se()") +
+  # geom_errorbar(data = pyruvate_errors, aes(x = Concentration, y = Rate_mean, color = Condition, ymin = min, ymax = max), inherit.aes = F, size = 1, width = .1) +
+  geom_point(stat = "summary", fun.y = "mean", size = 3, pch = 21) +
+  theme_prism() +
+  coord_cartesian(ylim = c(0, 25), xlim = c(-.001, 0.041), expand = FALSE)+
+  scale_y_continuous(expand = c(0,0), breaks = seq(0, 25, 5)) +
+  labs(x = expression(bold(paste("[Pyruvate] (", mu, "M)"))), y = expression(bold(bolditalic(J)*O['2']~(pmol[O['2']]/sec/mg[wt])))) +
+  scale_linetype_manual(breaks = c("Gastrocnemius Control", "Gastrocnemius Smoke","Soleus Control", "Soleus Smoke"), values = c(1,3,1,3)) +
+  scale_color_manual(breaks = c("Gastrocnemius Control", "Gastrocnemius Smoke","Soleus Control", "Soleus Smoke"), values = c("blue", "darkblue", "red", "darkred"))
+
+ggplotly(palm_kinetics) %>% 
+  layout(yaxis = list(title = "<i>J</i>O<sub>2</sub> (pmol<sub>O<sub>2</sub></sub>/sec/mg<sub>wt</sub>)", linewidth = 2, tickwidth = 2, tickfont = list(family = "Times New Roman Black")), xaxis = list(title = '<b>[Palmitoylcarnitine] (&#x3BC;M)</b>',linewidth = 2, tickwidth = 2, tickfont = list(family = "Times New Roman Black", size = 14)))
+```
+
+### No Effect of CSC in Palmitoylcarnitine Metabolism
+
+```{r}
+PC_km <- ggplotly(palmitate_km) %>%
+   layout(yaxis = list(title = "[Palmitoylcarnitine] (mM)", linewidth = 2, tickwidth = 2, tickfont = list(family = "Times New Roman Black")), xaxis = list(linewidth = 2, tickwidth = 2, tickfont = list(family = "Times New Roman Black", size = 14)))
+
+PC_vmax <- ggplotly(palmitate_vmax) %>%
+   layout(yaxis = list(title = "<i>J</i>O<sub>2</sub> (pmol<sub>O<sub>2</sub></sub>/sec/mg<sub>wt</sub>)", linewidth = 2, tickwidth = 2, tickfont = list(family = "Times New Roman Black")), xaxis = list(linewidth = 2, tickwidth = 2, tickfont = list(family = "Times New Roman Black", size = 14)))
+
+subplot(PC_km, PC_vmax, shareY = FALSE, titleY = TRUE) %>% layout(annotations = list(list(text = "K<sub>m</sub>", x = 0.2,  
+    y = 1.075,  
+    xref = "paper",  
+    yref = "paper",  
+    xanchor = "center",  
+    yanchor = "bottom",  
+    showarrow = FALSE 
+  ), list(text = "V<sub>max</sub>", x = 0.8,  
+    y = 1.075,  
+    xref = "paper",  
+    yref = "paper",  
+    xanchor = "center",  
+    yanchor = "bottom",  
+    showarrow = FALSE 
+  )), margin = 0)
+```
+
+
+### Pyruvate in Presence of Palmitoylcarnitine Kinetics
+
+```{r}
+palm_pyruvate_mm <- rbind(Gast_palm_pyr_mm, Sol_palm_pyr_mm)
+palm_pyruvate_mm$Tissue[palm_pyruvate_mm$Tissue == "Gastroc"] <- "Gastrocnemius"
+palm_pyruvate_mm$Condition <- paste(palm_pyruvate_mm$Tissue, palm_pyruvate_mm$Smoke)
+
+Gast_palm_pyr_predicted$Tissue <- "Gastrocnemius"
+Sol_palm_pyr_predicted$Tissue <- "Soleus"
+
+palm_pyruvate_predicted <- rbind(Gast_palm_pyr_predicted, Sol_palm_pyr_predicted)
+palm_pyruvate_predicted$Condition <- paste(palm_pyruvate_predicted$Tissue, palm_pyruvate_predicted$Smoke)
+
+palm_pyruvate_errors <- rbind(Gast_palm_pyr_errors, Sol_palm_pyr_errors)
+palm_pyruvate_errors$Tissue[palm_pyruvate_errors$Tissue == "Gastroc"] <- "Gastrocnemius"
+palm_pyruvate_errors$Condition <- paste(palm_pyruvate_errors$Tissue, palm_pyruvate_errors$Smoke)
+
+palm_pyruvate_kinetics <- ggplot(data = palm_pyruvate_mm, aes(x = Concentration, y = Rate, color = Condition)) +
+  stat_summary(geom = "errorbar", fun.data = "mean_se", size = 1, width = 0.1) +
+  geom_line(data = palm_pyruvate_predicted, aes(x = S, y = v, linetype = Condition), size = 1.5, stat = "summary", fun.y = "mean_se()") +
+  # geom_errorbar(data = pyruvate_errors, aes(x = Concentration, y = Rate_mean, color = Condition, ymin = min, ymax = max), inherit.aes = F, size = 1, width = .1) +
+  geom_point(stat = "summary", fun.y = "mean", size = 3, pch = 21) +
+  theme_prism() +
+  coord_cartesian(ylim = c(0, 70), xlim = c(-.1, 5.1), expand = FALSE) +
+  scale_y_continuous(expand = c(0,0), breaks = seq(0, 70, 10)) +
+  labs(x = expression(bold(paste("[Pyruvate] (", mu, "M)"))), y = expression(bold(bolditalic(J)*O['2']~(pmol[O['2']]/sec/mg[wt])))) +
+  scale_linetype_manual(breaks = c("Gastrocnemius Control", "Gastrocnemius Smoke","Soleus Control", "Soleus Smoke"), values = c(1,3,1,3)) +
+  scale_color_manual(breaks = c("Gastrocnemius Control", "Gastrocnemius Smoke","Soleus Control", "Soleus Smoke"), values = c("blue", "darkblue", "red", "darkred"))
+
+ggplotly(palm_pyruvate_kinetics) %>% 
+  layout(yaxis = list(title = "<i>J</i>O<sub>2</sub> (pmol<sub>O<sub>2</sub></sub>/sec/mg<sub>wt</sub>)", linewidth = 2, tickwidth = 2, tickfont = list(family = "Times New Roman Black")), xaxis = list(title = '<b>[Pyruvate] (&#x3BC;M)</b>',linewidth = 2, tickwidth = 2, tickfont = list(family = "Times New Roman Black", size = 14)))
+
+```
+
+
+### No Effect of CSC on Pyruvate Metabolism in Presence of Palmitoylcarnitine
+
+```{r}
+pyr_PC_km <- ggplotly(pyruvatePC_km) %>%
+   layout(yaxis = list(title = "[Puruvate] (mM)", linewidth = 2, tickwidth = 2, tickfont = list(family = "Times New Roman Black")), xaxis = list(linewidth = 2, tickwidth = 2, tickfont = list(family = "Times New Roman Black", size = 14)))
+
+pyr_PC_vmax <- ggplotly(pyruvatePC_vmax) %>%
+   layout(yaxis = list(title = "<i>J</i>O<sub>2</sub> (pmol<sub>O<sub>2</sub></sub>/sec/mg<sub>wt</sub>)", linewidth = 2, tickwidth = 2, tickfont = list(family = "Times New Roman Black")), xaxis = list(linewidth = 2, tickwidth = 2, tickfont = list(family = "Times New Roman Black", size = 14)))
+
+subplot(pyr_PC_km, pyr_PC_vmax, shareY = FALSE, titleY = TRUE) %>% layout(annotations = list(list(text = "K<sub>m</sub>", x = 0.2,  
+    y = 1.075,  
+    xref = "paper",  
+    yref = "paper",  
+    xanchor = "center",  
+    yanchor = "bottom",  
+    showarrow = FALSE 
+  ), list(text = "V<sub>max</sub>", x = 0.8,  
+    y = 1.075,  
+    xref = "paper",  
+    yref = "paper",  
+    xanchor = "center",  
+    yanchor = "bottom",  
+    showarrow = FALSE 
+  )), margin = 0)
+```
+
+
+
+### Combined Substrates Auguments Negative Effects of CSC
+
+```{r}
+pyruvate_percent_km <- ggplotly(pyr_percent_km2) %>% 
+  layout(yaxis = list(title = "Pyruvate + PC K<sub>m</sub>/Pyruvate K<sub>m</sub> (Percent Change)", linewidth = 2, tickwidth = 2, tickfont = list(family = "Times New Roman Black")), xaxis = list(linewidth = 2, tickwidth = 2, tickfont = list(family = "Times New Roman Black", size = 14)))
+
+pyruvate_percent_vmax <- ggplotly(pyr_percent_vmax2) %>% 
+  layout(yaxis = list(title = "Pyruvate + PC K<sub>m</sub>/Pyruvate V<sub>max</sub> (Percent Change)", linewidth = 2, tickwidth = 2, tickfont = list(family = "Times New Roman Black")), xaxis = list(linewidth = 2, tickwidth = 2, tickfont = list(family = "Times New Roman Black", size = 14)))
+
+subplot(pyruvate_percent_km, pyruvate_percent_vmax, shareY = FALSE, titleY = TRUE, margin = 0.07)
+```
+
+## Row
+
+### **Conclusions**
+
+&emsp; In conclusion, this study revealed that cigarette smoke condensate acutely impaired mitochondrial respiration supported by pyruvate, a product of glycolysis, in the fast-twitch gastrocnemius and, to a lesser extent, the slow-twitch soleus muscle. In contrast, the sensitivity and maximal respiration supported by the fatty acid palmitoylcarnitine were unaffected by cigarette smoke in either the gastrocnemius or soleus tissues. In a condition replicating the transition from fasting to the fed state, respiration supported by pyruvate was inhibited by the concurrent addition of palmitoylcarnitine in the fast-twitch gastrocnemius muscle. Interestingly, palmitoylcarnitine increased pyruvate utilization at submaximal respiration rates in conditions with cigarette smoke in the gastrocnemius. However, this additive effect of fatty acids was insufficient to restore mitochondrial respiration to the level of the control condition, thus still indicating an impaired mitochondrial metabolic flexibility. Our findings underscore that impaired metabolism of carbohydrate-derived substrates are the primary mechanism underlying cigarette smoke-associated muscle mitochondrial dysfunction, which leads to a vicious cycle involving excess glucose conversion into fatty acids and lipotoxicity, further exacerbating skeletal muscle and mitochondrial abnormalities commonly observed in humans chronically exposed to cigarette smoke.
+
+
+
+## Row
+
+### **Summary Diagram**
+
+```{r}
+aim3_figure <- image_read("data/Images/Substrate Sens Smoke.png")
+
+aim3_figure
+```
+
+
+# `r fontawesome::fa("magnifying-glass")` General Methods {#Methods}
+
+## Row
+
+### **Animals & Experimental Design**
+
+Mature C57BL/6 mice were used for these studies. All animals were maintained on a 12-hour dark/light cycle and fed standard chow ad libidum. Protocols were approved by the Institutional Animal Care and Use Committee of UMASS Amherst. Following euthanasia by 5% isoflurane, the aorta, heart, gastrocnemius and soleus were immediately harvested and placed in ice-cold BIOPS preservation solution.
+
+#### Tissues Used
+
+```{r, fig.align='center', out.width=450}
+tissues <- image_read("data/Images/Tissues.png")
+
+tissues
+```
+
+
+## Row
+
+### **Permeabilization & Incubation**
+
+The tissue preparation and respiration measurement techniques were adapted from established methods and have been previously described by our group. Briefly, BIOPS-immersed fibers (2.77mM CaK2EGTA, 7.23mM K2EGTA, 50mM K+ MES, 6.56 mM MgCl2, 20mM Taurine, 5.77mM ATP, 15mM PCr, 0.5mM DTT, 20mM Imidazole) were carefully separated with fine-tip forceps and subsequently bathed in a BIOPS-based saponin solution (50 µg saponin.ml-1 BIOPS) for 30 minutes at 4˚C. Following saponin treatment, muscle fibers were rinsed twice in ice-cold mitochondrial respiration fluid (MIR05, in mM: 110 Sucrose, 0.5 EGTA, 3 MgCl2, 60 K-lactobionate, 20 taurine, 10KH2PO4, 20 HEPES, BSA 1g.L-1, pH 7.1) for 10 minutes each. 
+Following chemical permeabilization, tissues were either immediately transferred to the Oroboros O2K for experiments (Aim 1), or incubated for 1-hour in a 2 mL solution of MiR05 (control) or MiR05 with 4% (1600 μg/mL) cigarette smoke concentrate (CSC; Murty Pharmaceuticals, Lexington, KY) at 4°C (Aims 2 & 3, model development, and H<sub>2</sub>O<sub>2</sub> experiments). This concentration of cigarette smoke was chosen based on pilot studies indicating that this concentration replicates the mitochondrial perturbations previously documented in mice and humans chronically exposed to cigarette smoke. 
+After the muscle sample was gently dabbed with a paper towel to remove excess fluid, the wet weight of the sample (1-2 mg) was measured using a standard, calibrated scale. The muscle fibers were then placed in the respiration chamber (Oxygraph O2K, Oroboros Instruments, Innsbruk, Austria) with 2 ml of MIR05 solution warmed to 37°C. Oxygen was added to the chambers, and oxygen concentration was maintained between 190-250 μM. After allowing the permeabilized muscle sample to equilibrate for 5 minutes, mitochondrial respiratory function was assessed in duplicate. Following the addition of each substrate, the respiration rate was recorded until a steady state of at least 30-seconds was reached, the average of which was used for data analysis. 
+
+#### Permeabilization Diagram
+
+```{r, fig.align='center', out.width=450}
+permeabilization <- image_read("data/Images/PermProtocols.png")
+
+permeabilization
+```
+
+
+# `r fontawesome::fa("file-pdf")` Manuscripts {#Papers}
+
+## Row
+
+### **Full Dissertation**
+
+
+```{r}
+shinyUI(
+  tags$iframe(style="height:700px; width:100%; scrolling=yes", 
+                  src="data/Dissertation.pdf")
+      )
+
+```
+
+Also available on ScholarWorks (link coming soon) and [GitHub](https://github.com/stdecker/Dissertation/blob/main/Decker%2C%20ST%20Mechanisms%20of%20Cigarette%20Smoke-Induced%20Mitochondrial%20Dysfunction%20in%20Striated%20Muscle%20and%20Aorta.pdf).
+
+### **Published Manuscripts**
+
+```{r}
+shinyUI(
+      tabsetPanel(
+        # using iframe along with tags() within tab to display pdf with scroll, height and width could be adjusted
+         tabPanel("Substrate Utilization",
+                 tags$iframe(style="height:700px; width:100%; scrolling=yes",
+                  src="data/Decker_S_Cigarette_Smoke_Mito_Substrate_Oxidation.pdf"
+                 )
+        ),
+        tabPanel("Mechanisms",
+                 tags$iframe(style="height:700px; width:100%; scrolling=yes",
+                  src="data/Decker_S_Cigarette_Smoke_Mito_Energy_Transfer.pdf"
+                 )
+        ),
+        tabPanel("Acute CSC Titrations", value = "Coming Soon"#,
+                 # tags$iframe(style="height:700px; width:100%; scrolling=yes",
+                 #  src="https://cran.r-project.org/doc/manuals/r-release/R-intro.pdf"
+                 #)
+        ),
+        tabPanel("ROS Production", value = "Coming Soon"#,
+                 # tags$iframe(style="height:700px; width:100%; scrolling=yes",
+                 #  src="https://cran.r-project.org/doc/manuals/r-release/R-intro.pdf"
+                 #)
+        )
+      )
+)
+
+```
+
+## Row
+
+### **Manuscript Links**
+
+#### Substrate Utilization Manuscript (Jan 2023 in *Life Sciences*): 
+
+**Decker ST**, Matias AA, Bannon ST, Madden JP, Alexandrou-Majaj N, Layec G. Effects of cigarette smoke on in situ mitochondrial substrate oxidation of slow- and fast-twitch skeletal muscles. *Life Sci.* 2023 Jan 13;315:121376. [doi: 10.1016/j.lfs.2023.121376](https://doi.org/10.1016/j.lfs.2023.121376). PMID: [36646379](https://pubmed.ncbi.nlm.nih.gov/36646379/).
+<br>
+*[Life Sciences](https://www.sciencedirect.com/science/article/abs/pii/S0024320523000103?via%3Dihub)*
+<br>
+[PubMed](https://pubmed.ncbi.nlm.nih.gov/36646379/)
+
+
+#### CSC Mechanisms Manuscript (Mar 2023 in *BBA - Bioenergetics*)
+
+**Decker ST**, Alexandrou-Majaj N, Layec G. Effects of Acute Cigarette Smoke Concentrate Exposure on Mitochondrial Energy Transfer in Fast- and Slow-Twitch Skeletal Muscle. *Biochimica et Biophysica Acta - Bioenergetics*. 2023 Mar
+<br>
+*[Biochimica et Biophysica Acta (BBA) - Bioenergetics](https://www.sciencedirect.com/science/article/pii/S0005272823000191?via%3Dihub)*
+<br>
+[PubMed](https://pubmed.ncbi.nlm.nih.gov/36972770/)
