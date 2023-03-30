@@ -190,7 +190,7 @@ aim1_outline
 
 
 ```{r fig.align='center', out.width=750}
-aim2_outline <- image_read("data/Images/CAT Mechanisms.png")
+aim2_outline <- magick::image_read("data/Images/Energy Transfer Graphical Abstract.png")
 
 aim2_outline
 ```
@@ -674,9 +674,7 @@ $$ANT~inhibition~(\%) = \frac{(GMDS_{Smoke} - CAT_{5.0_{Smoke}}) - (GMDS_{Contro
 ### Overview
 
 ```{r}
-aim2_methods <- image_read("data/Images/6 - copy of Aim 3.png")
-
-aim2_methods
+aim2_outline
 ```
 
 
