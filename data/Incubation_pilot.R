@@ -26,7 +26,7 @@ library(segmented)
 
 
 #Load data ----
-data2 <- read_excel('C:\\Users\\Stephen\\OneDrive - University of Massachusetts\\O2MDrive_Beta\\Projects\\CS-THNR\\O2K Analysis Files\\Project 2\\Analysis File2test.xlsx', sheet = "Final Data", col_names = TRUE)
+data2 <- read_excel('Analysis File2test.xlsx', sheet = "Final Data", col_names = TRUE)
 
 
 data2 <- data2[-c(10, 11, 12:15)]
