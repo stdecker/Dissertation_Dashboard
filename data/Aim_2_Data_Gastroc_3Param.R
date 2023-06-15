@@ -29,7 +29,7 @@ smoke_comparisons <- list(c("Control", "Smoke"))
 
 
 # Pyruvate data ----
-Gast_pyr_data <- read_excel('C:\\Users\\Stephen\\OneDrive - University of Massachusetts\\O2MDrive_Beta\\Projects\\CS-THNR\\O2K Analysis Files\\Project 3\\Analysis File3_Pyruvate.xlsx', sheet = "Final Data")
+Gast_pyr_data <- read_excel('Analysis File3_Pyruvate.xlsx', sheet = "Final Data")
 
 Gast_pyr_data$Tissue[Gast_pyr_data$Tissue == "Soleus"] <- NA
 
