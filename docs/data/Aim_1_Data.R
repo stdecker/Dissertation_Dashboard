@@ -14,7 +14,7 @@ library(psych)
 
 source("data/Aim1_CS.R")
 #Load data ----
-data <- read_excel('C:\\Users\\Stephen\\OneDrive - University of Massachusetts\\O2MDrive_Beta\\Projects\\CS-THNR\\O2K Analysis Files\\Project 1\\Analysis File1.xlsx', sheet = "Final Data")
+data <- read_excel('C:\\Users\\u1159489\\Box\\LayecLab\\CS-THNR\\O2K Analysis Files\\Project 1\\Analysis File1.xlsx', sheet = "Final Data")
 
 data[data == 0] <- NA
 

@@ -53,7 +53,7 @@ Sidak <- function(vecP)
 }
 
 # Import H2O2 data ----
-h2o2_data <- read_excel('C:\\Users\\Stephen\\OneDrive - University of Massachusetts\\O2MDrive_Beta\\Projects\\CS-THNR\\O2K Analysis Files\\H2O2\\H2O2.xlsx', sheet = "Final H2O2 Data")
+h2o2_data <- read_excel('C:\\Users\\u1159489\\Box\\LayecLab\\CS-THNR\\O2K Analysis Files\\H2O2\\H2O2.xlsx', sheet = "Final H2O2 Data")
 
 h2o2_data$Tissue[h2o2_data$Tissue == "Gastroc"] <- "Gastrocnemius"
 
@@ -430,7 +430,7 @@ mainplot_h2o2 <- ggplot(data = subset(h2o2_long[-c(273, 279, 280, 281, 287, 288)
 
 
 # Import Resp data ----
-resp_data <- read_excel('C:\\Users\\Stephen\\OneDrive - University of Massachusetts\\O2MDrive_Beta\\Projects\\CS-THNR\\O2K Analysis Files\\H2O2\\H2O2.xlsx', sheet = "Final Resp Data")
+resp_data <- read_excel('C:\\Users\\u1159489\\Box\\LayecLab\\CS-THNR\\O2K Analysis Files\\H2O2\\H2O2.xlsx', sheet = "Final Resp Data")
 
 resp_data$Tissue[resp_data$Tissue == "Gastroc"] <- "Gastrocnemius"
 
