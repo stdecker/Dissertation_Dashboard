@@ -1576,10 +1576,10 @@ shinyUI(
                   src="data/Decker_S_Cigarette_Smoke_Mito_Energy_Transfer.pdf"
                  )
         ),
-        tabPanel("Acute CSC Titrations", value = "Coming Soon"#,
-                 # tags$iframe(style="height:700px; width:100%; scrolling=yes",
-                 #  src="https://cran.r-project.org/doc/manuals/r-release/R-intro.pdf"
-                 #)
+        tabPanel("Acute CSC Titrations", 
+                 tags$iframe(style="height:700px; width:100%; scrolling=yes",
+                  src="data/Decker_S_Cigarette_Tissue_Specific_Consequences.pdf"
+                 )
         ),
         tabPanel("ROS Production", value = "Coming Soon"#,
                  # tags$iframe(style="height:700px; width:100%; scrolling=yes",
@@ -1611,3 +1611,12 @@ shinyUI(
 *[Biochimica et Biophysica Acta (BBA) - Bioenergetics](https://www.sciencedirect.com/science/article/pii/S0005272823000191?via%3Dihub)*
 <br>
 [PubMed](https://pubmed.ncbi.nlm.nih.gov/36972770/)
+
+
+#### Tissue Specificity
+
+**Decker ST**, Matias AA, Cuadra AE, Bannon ST, Madden JP, Erol ME, Serviente C, Fenelon K, Layec G. Tissue-specific mitochondrial toxicity of cigarette smoke concentrate: consequence to oxidative phosphorylation. *American Journal of Physiology - Heart & Circulatory Physiology*. 2023 Oct
+<br>
+*[American Journal of Physiology - Heart & Circulatory Physiology](https://journals.physiology.org/doi/abs/10.1152/ajpheart.00199.2023?rfr_dat=cr_pub++0pubmed&url_ver=Z39.88-2003&rfr_id=ori%3Arid%3Acrossref.org)*
+<br>
+[PubMed](https://pubmed.ncbi.nlm.nih.gov/37712922/)
