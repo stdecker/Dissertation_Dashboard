@@ -14,7 +14,7 @@ library(stringr)
 library(plotrix)
 
 #Load data ----
-CS_data <- read_excel("C:\\Users\\Stephen\\OneDrive - University of Massachusetts\\O2MDrive_Beta\\Projects\\CS-THNR\\O2K Analysis Files\\Freezer Studies\\20 min incubations.xlsx", sheet = "CS Activity")
+CS_data <- read_excel("C:\\Users\\u1159489\\Box\\LayecLab\\CS-THNR\\O2K Analysis Files\\Freezer Studies\\20 min incubations.xlsx", sheet = "CS Activity")
 
 # Remove all NA
 CS_data <- na.omit(CS_data)
