@@ -1613,7 +1613,7 @@ shinyUI(
 [PubMed](https://pubmed.ncbi.nlm.nih.gov/36972770/)
 
 
-#### Tissue Specificity
+#### Acute CSC Titrations Manuscript (Oct 2023 in *AJP - Heart & Circ Physiol*)
 
 **Decker ST**, Matias AA, Cuadra AE, Bannon ST, Madden JP, Erol ME, Serviente C, Fenelon K, Layec G. Tissue-specific mitochondrial toxicity of cigarette smoke concentrate: consequence to oxidative phosphorylation. *American Journal of Physiology - Heart & Circulatory Physiology*. 2023 Oct
 <br>
