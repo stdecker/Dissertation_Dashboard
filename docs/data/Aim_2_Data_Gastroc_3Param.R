@@ -29,7 +29,7 @@ smoke_comparisons <- list(c("Control", "Smoke"))
 
 
 # Pyruvate data ----
-Gast_pyr_data <- read_excel('C:\\Users\\u1159489\\Box\\LayecLab\\CS-THNR\\O2K Analysis Files\\Project 3\\Analysis File3_Pyruvate.xlsx', sheet = "Final Data")
+Gast_pyr_data <- read_excel('C:\\Users\\Stephen\\OneDrive - University of Massachusetts\\O2MDrive_Beta\\Projects\\CS-THNR\\O2K Analysis Files\\Project 3\\Analysis File3_Pyruvate.xlsx', sheet = "Final Data")
 
 Gast_pyr_data$Tissue[Gast_pyr_data$Tissue == "Soleus"] <- NA
 
@@ -176,7 +176,7 @@ Gast_pyr_km <- ggplot(data = Gast_pyr_kinetic_values, aes(x = Smoke, y = Km, fil
 
 
 # Palmitate Data ----
-Gast_palm_data <- read_excel('C:\\Users\\u1159489\\Box\\LayecLab\\CS-THNR\\O2K Analysis Files\\Project 3\\Analysis File3_Palmitate.xlsx', sheet = "Final Data")
+Gast_palm_data <- read_excel('C:\\Users\\Stephen\\OneDrive - University of Massachusetts\\O2MDrive_Beta\\Projects\\CS-THNR\\O2K Analysis Files\\Project 3\\Analysis File3_Palmitate.xlsx', sheet = "Final Data")
 
 Gast_palm_data$Tissue[Gast_palm_data$Tissue == "Soleus"] <- NA  
 

@@ -26,7 +26,7 @@ library(segmented)
 
 
 #Load data ----
-data2 <- read_excel('C:\\Users\\u1159489\\Box\\LayecLab\\CS-THNR\\O2K Analysis Files\\Project 2\\Analysis File2test.xlsx', sheet = "Final Data", col_names = TRUE)
+data2 <- read_excel('C:\\Users\\Stephen\\OneDrive - University of Massachusetts\\O2MDrive_Beta\\Projects\\CS-THNR\\O2K Analysis Files\\Project 2\\Analysis File2test.xlsx', sheet = "Final Data", col_names = TRUE)
 
 
 data2 <- data2[-c(10, 11, 12:15)]
@@ -143,7 +143,7 @@ Percent_Incubation2 <- ggplot(subset(percent_long2, name %in% c(paste(names(perc
 
 
 # Soleus ----
-data3 <- read_excel('C:\\Users\\u1159489\\Box\\LayecLab\\CS-THNR\\O2K Analysis Files\\Project 2\\Analysis File2Soleus.xlsx', sheet = "Final Data", col_names = TRUE)
+data3 <- read_excel('C:\\Users\\Stephen\\OneDrive - University of Massachusetts\\O2MDrive_Beta\\Projects\\CS-THNR\\O2K Analysis Files\\Project 2\\Analysis File2Soleus.xlsx', sheet = "Final Data", col_names = TRUE)
 
 
 data3 <- data3[-c(10:15)]
@@ -186,7 +186,7 @@ graph_sol <- melt(Sol_inc_percent[5:7])
 
 
 #AGAIN!!  Load data ----
-INCdata <- read_excel('C:\\Users\\u1159489\\Box\\LayecLab\\CS-THNR\\O2K Analysis Files\\Project 2\\Analysis File2.xlsx', sheet = "Final Data", col_names = TRUE)
+INCdata <- read_excel('C:\\Users\\Stephen\\OneDrive - University of Massachusetts\\O2MDrive_Beta\\Projects\\CS-THNR\\O2K Analysis Files\\Project 2\\Analysis File2.xlsx', sheet = "Final Data", col_names = TRUE)
 
 INCdata <- INCdata[-c(11:15)]
 
@@ -298,7 +298,7 @@ incubation_GMDS_plot <- ggplot(data = subset(INCdata_long, State %in% "GMDS"), a
   #scale_fill_grey(start = 1, end = 0.25, name = "Incubation Time") +
   guides(fill = guide_legend(override.aes = list(shape = NA)))
 
-Highdata <- read_excel('C:\\Users\\u1159489\\Box\\LayecLab\\CS-THNR\\O2K Analysis Files\\Project 2\\Analysis File2High.xlsx', sheet = "Final Data", col_names = TRUE)
+Highdata <- read_excel('C:\\Users\\Stephen\\OneDrive - University of Massachusetts\\O2MDrive_Beta\\Projects\\CS-THNR\\O2K Analysis Files\\Project 2\\Analysis File2High.xlsx', sheet = "Final Data", col_names = TRUE)
 
 Highdata <- Highdata[-c(13:16)]
 
@@ -429,7 +429,7 @@ High_Soleus <- High_Soleus +
   scale_y_continuous(expand = c(0,0), breaks = seq(0,250,20))
 
 
-whenwillthisend <- readxl::read_xlsx('C:\\Users\\u1159489\\Box\\LayecLab\\CS-THNR\\O2K Analysis Files\\Project 2\\Analysis File2 0-5.xlsx', sheet = "Final Data", col_names = TRUE)
+whenwillthisend <- readxl::read_xlsx('C:\\Users\\Stephen\\OneDrive - University of Massachusetts\\O2MDrive_Beta\\Projects\\CS-THNR\\O2K Analysis Files\\Project 2\\Analysis File2 0-5.xlsx', sheet = "Final Data", col_names = TRUE)
 
 whenwillthisend <- whenwillthisend[-c(13:16)]
 

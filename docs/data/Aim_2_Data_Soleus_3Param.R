@@ -27,7 +27,7 @@ library(segmented)
 smoke_comparisons <- list(c("Control", "Smoke"))
 
 # Pyruvate data ----
-Sol_pyr_data <- read_excel('C:\\Users\\u1159489\\Box\\LayecLab\\CS-THNR\\O2K Analysis Files\\Project 3\\Analysis File3_Pyruvate.xlsx', sheet = "Final Data")
+Sol_pyr_data <- read_excel('C:\\Users\\Stephen\\OneDrive - University of Massachusetts\\O2MDrive_Beta\\Projects\\CS-THNR\\O2K Analysis Files\\Project 3\\Analysis File3_Pyruvate.xlsx', sheet = "Final Data")
 
 Sol_pyr_data$Tissue[Sol_pyr_data$Tissue == "Gastroc"] <- NA
 
@@ -172,7 +172,7 @@ Sol_pyr_km <- ggplot(data = subset(Sol_pyr_kinetic_values, Km <0.4), aes(x = Smo
 
 
 # Palmitate Data ----
-Sol_palm_data <- read_excel('C:\\Users\\u1159489\\Box\\LayecLab\\CS-THNR\\O2K Analysis Files\\Project 3\\Analysis File3_Palmitate.xlsx', sheet = "Final Data")
+Sol_palm_data <- read_excel('C:\\Users\\Stephen\\OneDrive - University of Massachusetts\\O2MDrive_Beta\\Projects\\CS-THNR\\O2K Analysis Files\\Project 3\\Analysis File3_Palmitate.xlsx', sheet = "Final Data")
 
 Sol_palm_data$Tissue[Sol_palm_data$Tissue == "Gastroc"] <- NA
 

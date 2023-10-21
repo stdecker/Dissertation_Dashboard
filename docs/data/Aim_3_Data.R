@@ -56,7 +56,7 @@ Sidak <- function(vecP)
 }
 
 # Import data ----
-cat_data <- read_excel('C:\\Users\\u1159489\\Box\\LayecLab\\CS-THNR\\O2K Analysis Files\\Project 4\\Analysis File4.xlsx', sheet = "Final Data")
+cat_data <- read_excel('C:\\Users\\Stephen\\OneDrive - University of Massachusetts\\O2MDrive_Beta\\Projects\\CS-THNR\\O2K Analysis Files\\Project 4\\Analysis File4.xlsx', sheet = "Final Data")
 
 cat_data$Tissue[cat_data$Tissue == "Gastroc"] <- "Gastrocnemius"
 
